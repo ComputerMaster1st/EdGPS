@@ -6,7 +6,7 @@ namespace EdGps
     {
         public static void Main(string[] args) {
             Console.Write("E:D Journal Log Directory :");
-            var directoryPath = "";
+            var directoryPath = Console.ReadLine();
         }
     }
 }
