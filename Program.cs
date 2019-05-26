@@ -1,4 +1,5 @@
 ﻿using System;
+using EdGps.Core;
 
 namespace EdGps
 {
@@ -6,7 +7,7 @@ namespace EdGps
     {
         public static void Main(string[] args) {
             Console.Write("E:D Journal Log Directory :");
-            var directoryPath = Console.ReadLine();
+            var directoryPath = Parser.ParseDirectoryPath(Console.ReadLine());
         }
     }
 }
