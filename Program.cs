@@ -1,8 +1,12 @@
-﻿namespace EDCurrentSystem
+﻿using System;
+
+namespace EdGps
 {
     public class Program
     {
-        private static void Main(string[] args) {
+        public static void Main(string[] args) {
+            Console.Write("E:D Journal Log Directory :");
+            var directoryPath = "";
         }
     }
 }
