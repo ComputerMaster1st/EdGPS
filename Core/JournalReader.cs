@@ -18,6 +18,7 @@ namespace EdGps.Core
         public event EventHandler<FsdJump> OnFsdJump;
         public event EventHandler<FssDiscoveryScan> OnFssDiscoveryScan;
         public event EventHandler<Body> OnBodyScan;
+        public event EventHandler<DssScan> OnDssScan;
         public event EventHandler<bool> OnAllBodiesFound;
 
         public JournalReader(string journalDirectory) {
@@ -94,7 +95,7 @@ namespace EdGps.Core
                     OnAllBodiesFound?.Invoke(this, true);
                     break;
                 case "SAAScanComplete":
-                    // TODO: Create SAAScanComplete Event
+                    OnDssScan?.Invoke(this, Parser.ParseJournalEvent<DssScan>(rawData));
                     break;
                 case "StartJump":
                     // TODO: Create StartJump Event
