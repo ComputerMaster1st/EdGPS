@@ -39,7 +39,6 @@ namespace EdGps.Core
             _cancelReader?.Dispose();
             _cancelReader = new CancellationTokenSource();            
             _task = Task.Run(async () => await RunAsync(GetJournal(), _cancelReader.Token));
-            _task.Start();
         }
 
         private async Task StopAsync() {
