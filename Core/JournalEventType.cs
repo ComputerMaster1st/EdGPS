@@ -1,4 +1,4 @@
-namespace Elite_Dangerous_Galactic_Positioning_System.Core
+namespace EdGps.Core
 {
     public enum JournalEventType
     {

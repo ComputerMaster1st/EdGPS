@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Newtonsoft.Json;
 
-namespace Elite_Dangerous_Galactic_Positioning_System.Core.Models
+namespace EdGps.Core.Models
 {
     public class FsdJump : IJournalEvent
     {
