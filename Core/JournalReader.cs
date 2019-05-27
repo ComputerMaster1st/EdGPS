@@ -8,15 +8,12 @@ namespace Elite_Dangerous_Galactic_Positioning_System.Core
 {
     public class JournalReader
     {
+        private DirectoryInfo _directory;
         private CancellationTokenSource _cancelReader = null;
         private FileSystemWatcher watcher = new FileSystemWatcher();
 
         public JournalReader(string journalDirectory) {
-            var directory = new DirectoryInfo(journalDirectory);
-            var journalPath = directory.GetFiles()
-                .Where(f => f.Extension == ".log")
-                .OrderByDescending(f => f.LastWriteTime)
-                .First();
+            _directory = new DirectoryInfo(journalDirectory);
 
             watcher.Path = journalDirectory;
             watcher.NotifyFilter = NotifyFilters.LastAccess 
@@ -29,6 +26,11 @@ namespace Elite_Dangerous_Galactic_Positioning_System.Core
         public async Task StartAsync() {
             _cancelReader?.Dispose();
             _cancelReader = new CancellationTokenSource();
+
+            var journalPath = _directory.GetFiles()
+                .Where(f => f.Extension == ".log")
+                .OrderByDescending(f => f.LastWriteTime)
+                .First();
         }
 
         private async Task RunAsync(FileInfo journalFile, CancellationToken token) {
