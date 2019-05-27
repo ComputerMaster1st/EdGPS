@@ -1,3 +1,6 @@
+using System.Collections.Generic;
+using Newtonsoft.Json;
+
 namespace EdGps.Core
 {
     public static class Parser
@@ -11,5 +14,8 @@ namespace EdGps.Core
 
             return sanitizePath.Trim(' ');
         }
+
+        public static Dictionary<string, object> ParseJson(string line) 
+            => JsonConvert.DeserializeObject<Dictionary<string, object>>(line);
     }
 }
