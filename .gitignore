@@ -332,4 +332,4 @@ ASALocalRun/
 # Ignore local folders
 systems/
 edlogs/
-selfcontained-*/
+EdGps-*/
