@@ -24,10 +24,13 @@ namespace EdGps
             _reader.OnDssScan += OnSurfaceScanAsync;
             _reader.OnFsdJump += OnEnteringNewSystemAsync;
             _reader.OnFssDiscoveryScan += OnSystemHonkAsync;
+            _reader.OnShutdown += OnShutdownAsync;
 
             _system = await StarSystem.LoadAsync() ?? new StarSystem("Waiting...", new List<double>() { 0, 0, 0 });
             _reader.Start();
         }
+
+        private async void OnShutdownAsync(object sender, bool e) => await WriteAndSaveAsync();
 
         private async void OnSystemHonkAsync(object sender, FssDiscoveryScan scan) {
             _system.TotalBodies = scan.BodyCount;
@@ -57,8 +60,8 @@ namespace EdGps
         }
 
         private async Task WriteAndSaveAsync() {
-            _writer.Write(_system);
             await _system.SaveAsync();
+            _writer.Write(_system);
         }
     }
 }
