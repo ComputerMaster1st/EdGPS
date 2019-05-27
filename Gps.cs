@@ -28,6 +28,7 @@ namespace EdGps
             _reader.OnStartJump += OnEnteringHyperspace;
 
             _system = StarSystem.Load() ?? new StarSystem("Waiting...", new List<double>() { 0, 0, 0 });
+            Console.Title = $"Elite: Dangerous | Global Positioning System | {_system.Name}";
             _writer.Write(_system);
             _reader.Start();
         }
@@ -49,6 +50,7 @@ namespace EdGps
 
         private void OnEnteringNewSystem(object sender, FsdJump system) {
             _system = StarSystem.Load(system.Name) ?? new StarSystem(system.Name, system.Coordinates);
+            Console.Title = $"Elite: Dangerous | Global Positioning System | {_system.Name}";
             _nextSystem = null;
             _writer.Write(_system, _nextSystem);
         }

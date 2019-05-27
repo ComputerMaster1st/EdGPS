@@ -10,6 +10,7 @@ namespace EdGps
         private Gps _gps = null;
 
         public static void Main(string[] args) {
+            Console.Title = "Elite: Dangerous | Global Positioning System";
             if (!Directory.Exists(Directories.SystemDir)) Directory.CreateDirectory(Directories.SystemDir);
 
             //Check if user has already set a path
