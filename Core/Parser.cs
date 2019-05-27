@@ -17,5 +17,8 @@ namespace EdGps.Core
 
         public static Dictionary<string, object> ParseJson(string line) 
             => JsonConvert.DeserializeObject<Dictionary<string, object>>(line);
+
+        public static T ParseJournalEvent<T>(Dictionary<string, object> rawData) where T : class, IJournalEvent
+            => JsonConvert.DeserializeObject<T>(JsonConvert.SerializeObject(rawData));
     }
 }
