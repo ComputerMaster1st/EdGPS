@@ -21,7 +21,7 @@ namespace Elite_Dangerous_Galactic_Positioning_System.Core
                 | NotifyFilters.LastWrite
                 | NotifyFilters.FileName;
             watcher.Filter = "*.log";
-            watcher.Created += OnCreated;
+            watcher.Created += OnCreatedAsync;
             watcher.EnableRaisingEvents = true;
         }
 
@@ -30,6 +30,11 @@ namespace Elite_Dangerous_Galactic_Positioning_System.Core
             _cancelReader = new CancellationTokenSource();            
             _task = Task.Run(async () => await RunAsync(GetJournal(), _cancelReader.Token));
             _task.Start();
+        }
+
+        private async Task StopAsync() {
+            _cancelReader.Cancel();
+            await _task;
         }
 
         private FileInfo GetJournal()
@@ -42,8 +47,9 @@ namespace Elite_Dangerous_Galactic_Positioning_System.Core
             throw new NotImplementedException();
         }
 
-        private void OnCreated(object sender, FileSystemEventArgs e) {
-            throw new NotImplementedException();
+        private async void OnCreatedAsync(object sender, FileSystemEventArgs e) {
+            await StopAsync();
+            await StartAsync();
         }
     }
 }
