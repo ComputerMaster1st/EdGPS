@@ -7,6 +7,8 @@ namespace EdGps
     public class Program
     {
         public static void Main(string[] args) {
+            if (!Directory.Exists(Directories.SystemDir)) Directory.CreateDirectory(Directories.SystemDir);
+
             Console.Write("Please specify the directory where E:D Journal logs are kept. You may drag & drop if possible");
             var directoryPath = "";
             var input = "";
