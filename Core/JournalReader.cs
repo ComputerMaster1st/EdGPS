@@ -21,6 +21,7 @@ namespace EdGps.Core
         public event EventHandler<DssScan> OnDssScan;
         public event EventHandler<bool> OnAllBodiesFound;
         public event EventHandler<StartJump> OnStartJump;
+        public event EventHandler<bool> OnShutdown;
 
         public JournalReader(string journalDirectory) {
             _directory = new DirectoryInfo(journalDirectory);
@@ -102,7 +103,7 @@ namespace EdGps.Core
                     OnStartJump?.Invoke(this, Parser.ParseJournalEvent<StartJump>(rawData));
                     break;
                 case "Shutdown":
-                    // TODO: Create Shutdown Event
+                    OnShutdown?.Invoke(this, true);
                     break;
                 default:
                     return;
