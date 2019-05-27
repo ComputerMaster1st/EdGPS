@@ -17,6 +17,7 @@ namespace EdGps.Core
 
         public event EventHandler<FsdJump> OnFsdJump;
         public event EventHandler<FssDiscoveryScan> OnFssDiscoveryScan;
+        public event EventHandler<Body> OnBodyScan;
 
         public JournalReader(string journalDirectory) {
             _directory = new DirectoryInfo(journalDirectory);
@@ -75,7 +76,18 @@ namespace EdGps.Core
                     OnFssDiscoveryScan?.Invoke(this, Parser.ParseJournalEvent<FssDiscoveryScan>(rawData));
                     break;
                 case "Scan":
-                    // TODO: Create Scan Event
+                    var body = Parser.ParseScanBody(rawData);
+
+                    if (rawData.ContainsKey("StarType")) {
+                        body.Type = BodyType.Star;
+                        body.SubType = rawData["StarType"].ToString();
+                    } else if (rawData.ContainsKey("PlanetClass")) {
+                        body.Type = BodyType.Planet;
+                        body.SubType = rawData["PlanetClass"].ToString();
+                        body.Terraformable = rawData["TerraformState"].ToString();
+                    } else body.Type = BodyType.Belt;
+
+                    OnBodyScan?.Invoke(this, body);
                     break;
                 case "FSSAllBodiesFound":
                     // TODO: Create FSSAllBodiesFound Event
