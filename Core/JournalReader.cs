@@ -4,6 +4,8 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Edgps.Core.EventArgs;
+using EdGps.Core.Models;
 
 namespace EdGps.Core
 {
@@ -13,6 +15,8 @@ namespace EdGps.Core
         private CancellationTokenSource _cancelReader = null;
         private FileSystemWatcher watcher = new FileSystemWatcher();
         private Task _task = null;
+
+        public event EventHandler<FsdJumpEventArgs> OnFsdJump;
 
         public JournalReader(string journalDirectory) {
             _directory = new DirectoryInfo(journalDirectory);
@@ -65,7 +69,7 @@ namespace EdGps.Core
 
             switch (rawData["event"]) {
                 case "FSDJump":
-                    // TODO: Create FSDJump Event
+                    OnFsdJump?.Invoke(this, new FsdJumpEventArgs(Parser.ParseJournalEvent<FsdJump>(rawData)));
                     break;
                 case "FSSDiscoveryScan":
                     // TODO: Create FSSDiscoveryScan Event
