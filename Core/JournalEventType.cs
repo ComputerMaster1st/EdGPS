@@ -4,6 +4,7 @@ namespace EdGps.Core
     {
         FsdJump,
         FssDiscoveryScan,
-        DssScanComplete
+        DssScanComplete,
+        StartJump
     }
 }
