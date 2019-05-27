@@ -14,6 +14,7 @@ namespace EdGps.Core
         private CancellationTokenSource _cancelReader = null;
         private FileSystemWatcher watcher = new FileSystemWatcher();
         private Task _task = null;
+        private ReaderStatus _status = ReaderStatus.Idle;
 
         public event EventHandler<FsdJump> OnFsdJump;
         public event EventHandler<FssDiscoveryScan> OnFssDiscoveryScan;
@@ -32,18 +33,18 @@ namespace EdGps.Core
                 | NotifyFilters.FileName;
             watcher.Filter = "*.log";
             watcher.Created += OnCreatedAsync;
-            watcher.EnableRaisingEvents = true;
         }
 
         public void Start() {
             _cancelReader?.Dispose();
             _cancelReader = new CancellationTokenSource();            
-            _task = Task.Run(async () => await RunAsync(GetJournal(), _cancelReader.Token));
+            watcher.EnableRaisingEvents = true;
+            _task = Task.Run(async () => await RunAsync(GetJournal()));
         }
 
         private async Task StopAsync() {
             _cancelReader.Cancel();
-            await _task;
+            while (_status != ReaderStatus.Stopped) await Task.Delay(1000);
         }
 
         private FileInfo GetJournal()
@@ -52,15 +53,16 @@ namespace EdGps.Core
                 .OrderByDescending(f => f.LastWriteTime)
                 .First();
 
-        private async Task RunAsync(FileInfo journalFile, CancellationToken token) {
+        private async Task RunAsync(FileInfo journalFile) {
             using (FileStream fs = journalFile.Open(FileMode.Open, FileAccess.Read, FileShare.ReadWrite)) 
             using (StreamReader sr = new StreamReader(fs)) {
-                while (!token.IsCancellationRequested) {
+                _status = ReaderStatus.Active;
+                while (!_cancelReader.IsCancellationRequested) {
                     while (!sr.EndOfStream) ReadEvent(Parser.ParseJson(sr.ReadLine()));
-                    while (sr.EndOfStream) await Task.Delay(1000);
-                    ReadEvent(Parser.ParseJson(sr.ReadLine()));
+                    while (sr.EndOfStream && !_cancelReader.IsCancellationRequested) await Task.Delay(1000);
                 }
             }
+            _status = ReaderStatus.Stopped;
         }
 
         private async void OnCreatedAsync(object sender, FileSystemEventArgs e) {
