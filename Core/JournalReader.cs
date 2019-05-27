@@ -64,7 +64,33 @@ namespace Elite_Dangerous_Galactic_Positioning_System.Core
         }
 
         public void ReadEvent(Dictionary<string, object> rawData) {
-            
+            if (!rawData.ContainsKey("event")) return;
+
+            switch (rawData["event"]) {
+                case "FSDJump":
+                    // TODO: Create FSDJump Event
+                    break;
+                case "FSSDiscoveryScan":
+                    // TODO: Create FSSDiscoveryScan Event
+                    break;
+                case "Scan":
+                    // TODO: Create Scan Event
+                    break;
+                case "FSSAllBodiesFound":
+                    // TODO: Create FSSAllBodiesFound Event
+                    break;
+                case "SAAScanComplete":
+                    // TODO: Create SAAScanComplete Event
+                    break;
+                case "StartJump":
+                    // TODO: Create StartJump Event
+                    break;
+                case "Shutdown":
+                    // TODO: Create Shutdown Event
+                    break;
+                default:
+                    return;
+            }
         }
     }
 }
