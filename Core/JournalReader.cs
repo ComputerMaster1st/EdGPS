@@ -11,6 +11,7 @@ namespace Elite_Dangerous_Galactic_Positioning_System.Core
         private DirectoryInfo _directory;
         private CancellationTokenSource _cancelReader = null;
         private FileSystemWatcher watcher = new FileSystemWatcher();
+        private Task _task = null;
 
         public JournalReader(string journalDirectory) {
             _directory = new DirectoryInfo(journalDirectory);
@@ -27,10 +28,13 @@ namespace Elite_Dangerous_Galactic_Positioning_System.Core
             _cancelReader?.Dispose();
             _cancelReader = new CancellationTokenSource();
 
-            var journalPath = _directory.GetFiles()
+            var journal = _directory.GetFiles()
                 .Where(f => f.Extension == ".log")
                 .OrderByDescending(f => f.LastWriteTime)
                 .First();
+            
+            _task = Task.Run(async () => await RunAsync(journal, _cancelReader.Token));
+            _task.Start();
         }
 
         private async Task RunAsync(FileInfo journalFile, CancellationToken token) {
