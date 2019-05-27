@@ -1,11 +1,14 @@
 ﻿using System;
 using System.IO;
+using System.Threading.Tasks;
 using EdGps.Core;
 
 namespace EdGps
 {
     public class Program
     {
+        private Gps _gps = null;
+
         public static void Main(string[] args) {
             if (!Directory.Exists(Directories.SystemDir)) Directory.CreateDirectory(Directories.SystemDir);
 
@@ -24,6 +27,14 @@ namespace EdGps
                 
                 Console.WriteLine("Unable to find directory! Please try again.");
             }
+
+            new Program().StartAsync(directoryPath).GetAwaiter().GetResult();
+        }
+
+        public async Task StartAsync(string directoryPath) {
+            _gps = new Gps(directoryPath);
+
+            await Task.Delay(-1);
         }
     }
 }
