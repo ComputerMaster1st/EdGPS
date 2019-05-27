@@ -19,21 +19,30 @@ namespace EdGps
         }
 
         public async Task StartAsync() {
-            _reader.OnAllBodiesFound += OnAllBodiesFound;
-            _reader.OnFsdJump += OnEnteringNewSystem;
+            _reader.OnAllBodiesFound += OnAllBodiesFoundAsync;
+            _reader.OnBodyScan += OnBodyScanAsync;
+            _reader.OnFsdJump += OnEnteringNewSystemAsync;
 
             _system = await StarSystem.LoadAsync() ?? new StarSystem("Waiting...", new List<double>() { 0, 0, 0 });
             _reader.Start();
         }
 
-        private void OnAllBodiesFound(object sender, bool isAllFound) {
-            _system.IsComplete = isAllFound;
+        private async void OnBodyScanAsync(object sender, Body body) {
+            _system.AddBody(body);
             _writer.Write(_system);
+            await _system.SaveAsync();
         }
 
-        private void OnEnteringNewSystem(object sender, FsdJump system) {
+        private async void OnAllBodiesFoundAsync(object sender, bool isAllFound) {
+            _system.IsComplete = isAllFound;
+            _writer.Write(_system);
+            await _system.SaveAsync();
+        }
+
+        private async void OnEnteringNewSystemAsync(object sender, FsdJump system) {
             _system = new StarSystem(system.Name, system.Coordinates);
             _writer.Write(_system);
+            await _system.SaveAsync();
         }
     }
 }
