@@ -11,7 +11,7 @@ namespace EdGps
         private JournalReader _reader;
         private ConsoleWriter _writer;
         private StarSystem _system = null;
-        private string _nextSystem = string.Empty;
+        private string _nextSystem = null;
 
         public Gps(string directoryPath) {
             _reader = new JournalReader(directoryPath);
@@ -25,9 +25,15 @@ namespace EdGps
             _reader.OnFsdJump += OnEnteringNewSystemAsync;
             _reader.OnFssDiscoveryScan += OnSystemHonkAsync;
             _reader.OnShutdown += OnShutdownAsync;
+            _reader.OnStartJump += OnEnteringHyperspaceAsync;
 
             _system = await StarSystem.LoadAsync() ?? new StarSystem("Waiting...", new List<double>() { 0, 0, 0 });
             _reader.Start();
+        }
+
+        private async void OnEnteringHyperspaceAsync(object sender, StartJump target) {
+            _nextSystem = target.SystemName;
+            await WriteAndSaveAsync();
         }
 
         private async void OnShutdownAsync(object sender, bool e) => await WriteAndSaveAsync();
@@ -61,7 +67,7 @@ namespace EdGps
 
         private async Task WriteAndSaveAsync() {
             await _system.SaveAsync();
-            _writer.Write(_system);
+            _writer.Write(_system, _nextSystem);
         }
     }
 }
