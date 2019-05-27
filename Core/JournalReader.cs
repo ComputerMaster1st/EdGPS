@@ -22,6 +22,7 @@ namespace Elite_Dangerous_Galactic_Positioning_System.Core
                 | NotifyFilters.FileName;
             watcher.Filter = "*.log";
             watcher.Created += OnCreated;
+            watcher.EnableRaisingEvents = true;
         }
 
         public async Task StartAsync() {
