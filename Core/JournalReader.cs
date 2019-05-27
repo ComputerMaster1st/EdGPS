@@ -57,7 +57,7 @@ namespace EdGps.Core
 
         private async void OnCreatedAsync(object sender, FileSystemEventArgs e) {
             await StopAsync();
-            await StartAsync();
+            Start();
         }
 
         public void ReadEvent(Dictionary<string, object> rawData) {
