@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading;
@@ -60,6 +61,10 @@ namespace Elite_Dangerous_Galactic_Positioning_System.Core
         private async void OnCreatedAsync(object sender, FileSystemEventArgs e) {
             await StopAsync();
             await StartAsync();
+        }
+
+        public void ReadEvent(Dictionary<string, object> rawData) {
+            
         }
     }
 }
