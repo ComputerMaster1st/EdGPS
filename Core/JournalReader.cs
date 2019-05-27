@@ -44,7 +44,17 @@ namespace Elite_Dangerous_Galactic_Positioning_System.Core
                 .First();
 
         private async Task RunAsync(FileInfo journalFile, CancellationToken token) {
-            throw new NotImplementedException();
+            using (FileStream fs = journalFile.Open(FileMode.Open, FileAccess.Read, FileShare.ReadWrite)) 
+            using (StreamReader sr = new StreamReader(fs)) {
+                while (!token.IsCancellationRequested) {
+                    while (!sr.EndOfStream) {
+                        // TODO: Parser Json
+                    }
+                    while (sr.EndOfStream) await Task.Delay(1000);
+
+                    // TODO: Parser Json
+                }
+            }
         }
 
         private async void OnCreatedAsync(object sender, FileSystemEventArgs e) {
