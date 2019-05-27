@@ -10,4 +10,4 @@ When prompted for a directory, please select the elite dangerous directory which
 ## Where can I download compiled builds?
 Windows : [x86](https://www.dropbox.com/s/xrwtf94y4f71njx/EdGPS-x86.zip?dl=0) | [x64](https://www.dropbox.com/s/cumn62aeyiewyjj/EdGPS-x64.zip?dl=0)
 
-To launch the GPS, find & run "EDCurrentSystem.exe". All builds are self-contained. This means you do not need to download any additional software.
+To launch the GPS, find & run "EdGps.exe". All builds are self-contained. This means you do not need to download any additional software.
