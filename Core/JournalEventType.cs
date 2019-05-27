@@ -2,6 +2,7 @@ namespace EdGps.Core
 {
     public enum JournalEventType
     {
-        FsdJump
+        FsdJump,
+        FssDiscoveryScan
     }
 }
