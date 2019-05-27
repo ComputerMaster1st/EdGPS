@@ -47,6 +47,7 @@ namespace EdGps
 
         private async void OnEnteringNewSystemAsync(object sender, FsdJump system) {
             _system = new StarSystem(system.Name, system.Coordinates);
+            _nextSystem = null;
             await WriteAndSaveAsync();
         }
 
