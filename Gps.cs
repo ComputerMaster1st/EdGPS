@@ -18,56 +18,53 @@ namespace EdGps
             _writer = new ConsoleWriter();
         }
 
-        public async Task StartAsync() {
-            _reader.OnAllBodiesFound += OnAllBodiesFoundAsync;
-            _reader.OnBodyScan += OnBodyScanAsync;
-            _reader.OnDssScan += OnSurfaceScanAsync;
-            _reader.OnFsdJump += OnEnteringNewSystemAsync;
-            _reader.OnFssDiscoveryScan += OnSystemHonkAsync;
-            _reader.OnShutdown += OnShutdownAsync;
-            _reader.OnStartJump += OnEnteringHyperspaceAsync;
+        public void Start() {
+            _reader.OnAllBodiesFound += OnAllBodiesFound;
+            _reader.OnBodyScan += OnBodyScan;
+            _reader.OnDssScan += OnSurfaceScan;
+            _reader.OnFsdJump += OnEnteringNewSystem;
+            _reader.OnFssDiscoveryScan += OnSystemHonk;
+            _reader.OnShutdown += OnShutdown;
+            _reader.OnStartJump += OnEnteringHyperspace;
 
-            _system = await StarSystem.LoadAsync() ?? new StarSystem("Waiting...", new List<double>() { 0, 0, 0 });
+            _system = StarSystem.Load() ?? new StarSystem("Waiting...", new List<double>() { 0, 0, 0 });
+            _writer.Write(_system);
             _reader.Start();
         }
 
-        private async void OnEnteringHyperspaceAsync(object sender, StartJump target) {
+        private void OnEnteringHyperspace(object sender, StartJump target) {
+            _system.Save();
             _nextSystem = target.SystemName;
-            await WriteAndSaveAsync();
+            _writer.Write(_system, _nextSystem);
         }
 
-        private async void OnShutdownAsync(object sender, bool e) => await WriteAndSaveAsync();
+        private void OnShutdown(object sender, bool e) => _system.Save();
 
-        private async void OnSystemHonkAsync(object sender, FssDiscoveryScan scan) {
+        private void OnSystemHonk(object sender, FssDiscoveryScan scan) {
             _system.TotalBodies = scan.BodyCount;
             _system.TotalNonBodies = scan.NonBodyCount;
             _system.IsHonked = true;
-            await WriteAndSaveAsync();
+            _writer.Write(_system, _nextSystem);
         }
 
-        private async void OnEnteringNewSystemAsync(object sender, FsdJump system) {
-            _system = new StarSystem(system.Name, system.Coordinates);
+        private void OnEnteringNewSystem(object sender, FsdJump system) {
+            _system = StarSystem.Load(system.Name) ?? new StarSystem(system.Name, system.Coordinates);
             _nextSystem = null;
-            await WriteAndSaveAsync();
+            _writer.Write(_system, _nextSystem);
         }
 
-        private async void OnSurfaceScanAsync(object sender, DssScan scan) {
+        private void OnSurfaceScan(object sender, DssScan scan) {
             _system.DssScanned(scan);
-            await WriteAndSaveAsync();
+            _writer.Write(_system, _nextSystem);
         }
 
-        private async void OnBodyScanAsync(object sender, Body body) {
+        private void OnBodyScan(object sender, Body body) {
             _system.AddBody(body);
-            await WriteAndSaveAsync();
+            _writer.Write(_system, _nextSystem);
         }
 
-        private async void OnAllBodiesFoundAsync(object sender, bool isAllFound) {
+        private void OnAllBodiesFound(object sender, bool isAllFound) {
             _system.IsComplete = isAllFound;
-            await WriteAndSaveAsync();
-        }
-
-        private async Task WriteAndSaveAsync() {
-            await _system.SaveAsync();
             _writer.Write(_system, _nextSystem);
         }
     }

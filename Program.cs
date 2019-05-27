@@ -33,8 +33,8 @@ namespace EdGps
 
         public async Task StartAsync(string directoryPath) {
             _gps = new Gps(directoryPath);
+            _gps.Start();
             
-            await _gps.StartAsync();
             await Task.Delay(-1);
         }
     }

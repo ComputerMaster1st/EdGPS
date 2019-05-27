@@ -86,10 +86,10 @@ namespace EdGps.Core
             AddSubBody(parentBody.SubBodies, newBody, step+1);
         }
 
-        public async static Task<StarSystem> LoadAsync(string systemName = null) {
+        public static StarSystem Load(string systemName = null) {
             if (!string.IsNullOrWhiteSpace(systemName)) {
                 if (File.Exists($"{Directories.SystemDir}/{systemName}.json"))
-                    return JsonConvert.DeserializeObject<StarSystem>(await File.ReadAllTextAsync($"{Directories.SystemDir}/{systemName}.json"));
+                    return JsonConvert.DeserializeObject<StarSystem>(File.ReadAllText($"{Directories.SystemDir}/{systemName}.json"));
                 else return null;
             }
 
@@ -102,12 +102,12 @@ namespace EdGps.Core
                 .OrderByDescending(f => f.LastWriteTime)
                 .First();
             
-            return JsonConvert.DeserializeObject<StarSystem>(await File.ReadAllTextAsync(log.ToString()));
+            return JsonConvert.DeserializeObject<StarSystem>(File.ReadAllText(log.ToString()));
         }
 
-        public async Task SaveAsync() {
+        public void Save() {
             var json = JsonConvert.SerializeObject(this, Formatting.Indented);
-            await File.WriteAllTextAsync($"{Directories.SystemDir}/{Name}.json", json);
+            File.WriteAllText($"{Directories.SystemDir}/{Name}.json", json);
         }
     }
 }
