@@ -27,16 +27,16 @@ namespace Elite_Dangerous_Galactic_Positioning_System.Core
 
         public async Task StartAsync() {
             _cancelReader?.Dispose();
-            _cancelReader = new CancellationTokenSource();
+            _cancelReader = new CancellationTokenSource();            
+            _task = Task.Run(async () => await RunAsync(GetJournal(), _cancelReader.Token));
+            _task.Start();
+        }
 
-            var journal = _directory.GetFiles()
+        private FileInfo GetJournal()
+            => _directory.GetFiles()
                 .Where(f => f.Extension == ".log")
                 .OrderByDescending(f => f.LastWriteTime)
                 .First();
-            
-            _task = Task.Run(async () => await RunAsync(journal, _cancelReader.Token));
-            _task.Start();
-        }
 
         private async Task RunAsync(FileInfo journalFile, CancellationToken token) {
             throw new NotImplementedException();
