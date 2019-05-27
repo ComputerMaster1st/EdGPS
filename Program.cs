@@ -31,6 +31,7 @@ namespace EdGps
                     directoryPath = Console.ReadLine()
                         .Replace('\'', ' ')
                         .Replace('&', ' ')
+                        .Replace('"', ' ')
                         .TrimStart(' ')
                         .TrimEnd(' ');
 
