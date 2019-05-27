@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using EdGps.Core;
@@ -18,10 +19,16 @@ namespace EdGps
         }
 
         public async Task StartAsync() {
+            _reader.OnAllBodiesFound += OnAllBodiesFound;
             _reader.OnFsdJump += OnEnteringNewSystem;
 
             _system = await StarSystem.LoadAsync() ?? new StarSystem("Waiting...", new List<double>() { 0, 0, 0 });
             _reader.Start();
+        }
+
+        private void OnAllBodiesFound(object sender, bool isAllFound) {
+            _system.IsComplete = isAllFound;
+            _writer.Write(_system);
         }
 
         private void OnEnteringNewSystem(object sender, FsdJump system) {
