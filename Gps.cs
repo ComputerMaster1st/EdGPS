@@ -10,10 +10,10 @@ namespace EdGps
 
         public Gps(string directoryPath) {
             _reader = new JournalReader(directoryPath);
-            _system = StarSystem.Load();
         }
 
-        public void Start() {
+        public async Task StartAsync() {
+            _system = await StarSystem.LoadAsync();
             _reader.Start();
         }
     }
