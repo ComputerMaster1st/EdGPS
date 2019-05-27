@@ -1,4 +1,4 @@
-namespace EDCurrentSystem.Models
+namespace EdGps.Core
 {
     public enum BodyType
     {

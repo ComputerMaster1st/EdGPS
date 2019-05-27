@@ -1,9 +1,7 @@
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using Newtonsoft.Json;
 
-namespace EDCurrentSystem.Models
+namespace EdGps.Core.Models
 {
     public class Body
     {
@@ -43,32 +41,5 @@ namespace EDCurrentSystem.Models
         }
         
         public Body(int bodyId) => Id = bodyId;
-
-        private List<int> ParseParents(List<Parent> parents) {
-            var newParents = new List<int>();
-
-            if (parents is null) return newParents;
-
-            foreach (var parent in parents) {
-                if (parent.Null > -1) {
-                    newParents.Add(parent.Null);
-                    continue;
-                }
-                if (parent.Planet > -1) {
-                    newParents.Add(parent.Planet);
-                    continue;
-                }
-                if (parent.Ring > -1) {
-                    newParents.Add(parent.Ring);
-                    continue;
-                }
-                if (parent.Star > -1) {
-                    newParents.Add(parent.Star);
-                    continue;
-                }
-            }
-            
-            return newParents;
-        }
     }
 }

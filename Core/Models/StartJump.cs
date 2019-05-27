@@ -1,12 +1,13 @@
-using System;
 using Newtonsoft.Json;
 
-namespace EDCurrentSystem.Models
+namespace EdGps.Core.Models
 {
-    public class StartJump
+    public class StartJump : IJournalEvent
     {
         public string JumpType { get; set; }
         public string SystemName { get; set; }
+
+        public JournalEventType JournalEvent => JournalEventType.StartJump;
 
         [JsonConstructor]
         public StartJump(string jumpType, string starSystem) {

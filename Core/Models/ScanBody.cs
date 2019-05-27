@@ -1,9 +1,8 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Newtonsoft.Json;
 
-namespace EDCurrentSystem.Models
+namespace EdGps.Core.Models
 {
     public class ScanBody
     {

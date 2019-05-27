@@ -2,9 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
+using EdGps.Core.Models;
 using Newtonsoft.Json;
 
-namespace EDCurrentSystem.Models
+namespace EdGps.Core
 {
     [JsonObject(MemberSerialization.Fields)]
     public class StarSystem
@@ -22,6 +24,7 @@ namespace EDCurrentSystem.Models
 
         public List<Body> Bodies { get; private set; } = new List<Body>();
 
+        [JsonConstructor]
         private StarSystem(string name, double latitude, double longitude, double elevation) {
             Name = name;
             Latitude = latitude;
@@ -41,18 +44,15 @@ namespace EDCurrentSystem.Models
             AddSubBody(Bodies, body);
         }
 
-        public void DssScanned(DssScan scan) {
-            MarkDssScanned(Bodies, scan);
-        }
+        public void DssScanned(DssScan scan) => MarkDssScanned(Bodies, scan);
 
         private void MarkDssScanned(List<Body> bodies, DssScan scan) {
             var body = bodies.FirstOrDefault(f => f.Id == scan.BodyId);
             
-            if (body is null) {
-                foreach (var subBody in bodies) {
+            if (body is null)
+                foreach (var subBody in bodies)
                     MarkDssScanned(subBody.SubBodies, scan);
-                }
-            } else body.IsDssScanned = true;
+            else body.IsDssScanned = true;
         }
 
         private void AddSubBody(List<Body> bodies, Body newBody, int step = 0) {
