@@ -26,7 +26,7 @@ namespace EdGps.Core
             watcher.EnableRaisingEvents = true;
         }
 
-        public async Task StartAsync() {
+        public void Start() {
             _cancelReader?.Dispose();
             _cancelReader = new CancellationTokenSource();            
             _task = Task.Run(async () => await RunAsync(GetJournal(), _cancelReader.Token));
