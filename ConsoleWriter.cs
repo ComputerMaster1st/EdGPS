@@ -36,13 +36,13 @@ namespace EdGps
             var output = new StringBuilder()
                 .AppendLine("Elite: Dangerous >> Galactic Positioning System || Created By: ComputerMaster1st")
                 .AppendLine()
-                .AppendFormat("Current System    : {0} {1}", system.Name, string.IsNullOrEmpty(nextSystem) ? "" : $"=> Jumping To {nextSystem}").AppendLine()
-                .AppendFormat("Co-ordinates      : Latitude ({0}) | Longitude ({1}) | Elevation ({2})", system.Latitude, system.Longitude, system.Elevation).AppendLine()
-                .AppendFormat("Distance From Sol : {0} Light Years", Math.Round(Math.Pow(Math.Pow(system.Longitude, 2) + 
+                .AppendFormat("Current System  : {0} {1}", system.Name, string.IsNullOrEmpty(nextSystem) ? "" : $"=> Jumping To {nextSystem}").AppendLine()
+                .AppendFormat("Co-ordinates    : Latitude ({0}) | Longitude ({1}) | Elevation ({2})", system.Latitude, system.Longitude, system.Elevation).AppendLine()
+                .AppendFormat("Distance (Ly)   : {0} (Sol)", Math.Round(Math.Pow(Math.Pow(system.Longitude, 2) + 
                     Math.Pow(system.Latitude, 2) + Math.Pow(system.Elevation, 2), 0.5), 2)).AppendLine()
-                .AppendFormat("System Scan       : {0}% Complete {1}", Math.Round(percentage, 0), system.IsComplete ? "[System Scan Complete]" : "").AppendLine()
-                .AppendFormat("Expected Bodies   : {0} ({1} non-bodies) {2}", system.TotalBodies, system.TotalNonBodies, system.IsHonked ? "" : "[Awaiting FSS Disovery Scan]").AppendLine()
-                .AppendLine("════════════════════════════════════════════════════════════════════════════════════");
+                .AppendFormat("System Scan     : {0}% Complete {1}", Math.Round(percentage, 0), system.IsComplete ? "[System Scan Complete]" : "").AppendLine()
+                .AppendFormat("Expected Bodies : {0} ({1} non-bodies) {2}", system.TotalBodies, system.TotalNonBodies, system.IsHonked ? "" : "[Awaiting FSS Disovery Scan]").AppendLine()
+                .AppendLine("════════════════════════════════════════════════════════════════════════════════════════════════════");
 
             return output.ToString();
         }
