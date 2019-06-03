@@ -79,7 +79,6 @@ namespace EdGps
 
         private void PlaySound(VoiceType response) {
             if (!_isReady) return;
-
             VoicePlayer.Play(response);
         }
     }
