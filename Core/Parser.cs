@@ -6,6 +6,13 @@ namespace EdGps.Core
 {
     public static class Parser
     {
+        public static string SanitizeDirectory(string directory) 
+            => directory.Replace('\'', ' ')
+                        .Replace('&', ' ')
+                        .Replace('"', ' ')
+                        .TrimStart(' ')
+                        .TrimEnd(' ');
+
         public static Dictionary<string, object> ParseJson(string line) 
             => JsonConvert.DeserializeObject<Dictionary<string, object>>(line);
 
