@@ -39,6 +39,7 @@ namespace EdGps
             _system.Save();
             _nextSystem = target.SystemName;
             _writer.Write(_system, _nextSystem);
+            PlaySound(VoiceType.Jumping);
         }
 
         private void OnShutdown(object sender, bool e) => _system.Save();
@@ -53,6 +54,7 @@ namespace EdGps
             _system.TotalNonBodies = scan.NonBodyCount;
             _system.IsHonked = true;
             _writer.Write(_system, _nextSystem);
+            if (!_system.IsComplete) PlaySound(VoiceType.Unidentified);
         }
 
         private void OnEnteringNewSystem(object sender, FsdJump system) {
@@ -60,6 +62,7 @@ namespace EdGps
             Console.Title = $"Elite: Dangerous | Global Positioning System | {_system.Name}";
             _nextSystem = null;
             _writer.Write(_system, _nextSystem);
+            PlaySound(VoiceType.Dropping);
         }
 
         private void OnSurfaceScan(object sender, DssScan scan) {
@@ -70,11 +73,17 @@ namespace EdGps
         private void OnBodyScan(object sender, Body body) {
             _system.AddBody(body);
             _writer.Write(_system, _nextSystem);
+
+            if (!string.IsNullOrEmpty(body.Terraformable)) PlaySound(VoiceType.Terraformable);
+            else if (body.SubType == "Water world") PlaySound(VoiceType.Water);
+            else if (body.SubType == "Earthlike body") PlaySound(VoiceType.Earth);
+            else if (body.SubType == "Ammonia world") PlaySound(VoiceType.Ammonia);
         }
 
         private void OnAllBodiesFound(object sender, bool isAllFound) {
             _system.IsComplete = isAllFound;
             _writer.Write(_system, _nextSystem);
+            PlaySound(VoiceType.Identified);
         }
 
         private void PlaySound(VoiceType response) {

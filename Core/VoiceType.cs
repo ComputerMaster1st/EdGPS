@@ -5,6 +5,7 @@ namespace EdGps.Core
         Ammonia,
         Dropping,
         Earth,
+        Water,
         Identified,
         Jumping,
         Standby,
