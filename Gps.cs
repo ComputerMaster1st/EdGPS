@@ -12,6 +12,7 @@ namespace EdGps
         private ConsoleWriter _writer;
         private StarSystem _system = null;
         private string _nextSystem = null;
+        private bool _isReady = false;
 
         public Gps(string directoryPath) {
             _reader = new JournalReader(directoryPath);
@@ -42,9 +43,8 @@ namespace EdGps
 
         private void OnShutdown(object sender, bool e) => _system.Save();
         
-        private void OnReady(object sender, bool e)
-        {
-            throw new NotImplementedException();
+        private void OnReady(object sender, bool e) {
+            _isReady = true;
         }
 
         private void OnSystemHonk(object sender, FssDiscoveryScan scan) {
@@ -74,6 +74,12 @@ namespace EdGps
         private void OnAllBodiesFound(object sender, bool isAllFound) {
             _system.IsComplete = isAllFound;
             _writer.Write(_system, _nextSystem);
+        }
+
+        private void PlaySound() {
+            if (!_isReady) return;
+
+            // TODO: Play voiceover
         }
     }
 }
