@@ -68,6 +68,7 @@ namespace EdGps
         private void OnSurfaceScan(object sender, DssScan scan) {
             _system.DssScanned(scan);
             _writer.Write(_system, _nextSystem);
+            PlaySound(VoiceType.Dss);
         }
 
         private void OnBodyScan(object sender, Body body) {

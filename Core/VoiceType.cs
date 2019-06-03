@@ -7,6 +7,7 @@ namespace EdGps.Core
         Earth,
         Water,
         Identified,
+        Dss,
         Jumping,
         Standby,
         Terraformable,
