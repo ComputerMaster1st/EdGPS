@@ -24,6 +24,7 @@ namespace EdGps
             _reader.OnDssScan += OnSurfaceScan;
             _reader.OnFsdJump += OnEnteringNewSystem;
             _reader.OnFssDiscoveryScan += OnSystemHonk;
+            _reader.OnReady += OnReady;
             _reader.OnShutdown += OnShutdown;
             _reader.OnStartJump += OnEnteringHyperspace;
 
@@ -40,6 +41,11 @@ namespace EdGps
         }
 
         private void OnShutdown(object sender, bool e) => _system.Save();
+        
+        private void OnReady(object sender, bool e)
+        {
+            throw new NotImplementedException();
+        }
 
         private void OnSystemHonk(object sender, FssDiscoveryScan scan) {
             _system.TotalBodies = scan.BodyCount;
