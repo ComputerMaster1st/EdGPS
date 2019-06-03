@@ -45,6 +45,7 @@ namespace EdGps
         
         private void OnReady(object sender, bool e) {
             _isReady = true;
+            PlaySound(VoiceType.Standby);
         }
 
         private void OnSystemHonk(object sender, FssDiscoveryScan scan) {
@@ -76,10 +77,10 @@ namespace EdGps
             _writer.Write(_system, _nextSystem);
         }
 
-        private void PlaySound() {
+        private void PlaySound(VoiceType response) {
             if (!_isReady) return;
 
-            // TODO: Play voiceover
+            VoicePlayer.Play(response);
         }
     }
 }
