@@ -11,6 +11,7 @@ namespace EdGps.Core
         Jumping,
         Standby,
         Terraformable,
-        Unidentified
+        Unidentified,
+        Initializing
     }
 }

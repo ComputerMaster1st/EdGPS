@@ -33,6 +33,7 @@ namespace EdGps
             Console.Title = $"Elite: Dangerous | Global Positioning System | {_system.Name}";
             _writer.Write(_system);
             _reader.Start();
+            PlaySound(VoiceType.Initializing);
         }
 
         private void OnEnteringHyperspace(object sender, StartJump target) {
