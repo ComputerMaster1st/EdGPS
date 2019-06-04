@@ -13,10 +13,12 @@ namespace EdGps
         private StarSystem _system = null;
         private string _nextSystem = null;
         private bool _isReady = false;
+        private bool _voiceEnabled;
 
-        public Gps(string directoryPath) {
-            _reader = new JournalReader(directoryPath);
+        public Gps(Config config) {
+            _reader = new JournalReader(config.JournalPath);
             _writer = new ConsoleWriter();
+            _voiceEnabled = config.VoiceEnabled;
         }
 
         public void Start() {

@@ -15,12 +15,12 @@ namespace EdGps
 
             //Check if user has already set a path
             // NOTE: This should be changed to some common config file, like a config.INI or something for future use
-            var edLogDirectoryFile = Path.Join(AppContext.BaseDirectory, "userdirectory.txt");
+            var config = Config.LoadOrCreate();
             var exittext = "\nPress any key to exit...";
             string directoryPath;
 
             try {
-                if (File.Exists(edLogDirectoryFile)) directoryPath = File.ReadAllText(edLogDirectoryFile);
+                if (!string.IsNullOrEmpty(config.JournalPath)) directoryPath = config.JournalPath;
                 else {
                     Console.WriteLine("\n\nE:D Journal Log Directory (e.g. C:\\Users\\<username>\\Saved Games\\Frontier Developments\\Elite Dangerous) :\n");
                     directoryPath = Parser.SanitizeDirectory(Console.ReadLine());
@@ -57,7 +57,7 @@ namespace EdGps
 
             //Save Path if legit
             try  {
-                File.WriteAllText(edLogDirectoryFile, directoryPath);
+                config.SetJournalPath(directoryPath);
             } catch (Exception e) {
                 Console.WriteLine("Error: " + e);
                 Console.WriteLine(exittext);
@@ -66,10 +66,10 @@ namespace EdGps
             }
 
             // If everything's okay, move on
-            new Program().StartAsync(directoryPath).GetAwaiter().GetResult();
+            new Program().StartAsync(config).GetAwaiter().GetResult();
         }
 
-        public async Task StartAsync(string directoryPath) {
+        public async Task StartAsync(Config config) {
             _gps = new Gps(directoryPath);
             _gps.Start();
             await Task.Delay(-1);
