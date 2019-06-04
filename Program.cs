@@ -70,7 +70,7 @@ namespace EdGps
         }
 
         public async Task StartAsync(Config config) {
-            _gps = new Gps(directoryPath);
+            _gps = new Gps(config);
             _gps.Start();
             await Task.Delay(-1);
         }
