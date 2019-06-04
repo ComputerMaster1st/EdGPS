@@ -1,16 +1,56 @@
-<Project Sdk="Microsoft.NET.Sdk">
-
+<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
   </PropertyGroup>
-
+  <ItemGroup>
+    <None Remove="Voice\Ammonia.mp3" />
+    <None Remove="Voice\Dropping.mp3" />
+    <None Remove="Voice\Dss.mp3" />
+    <None Remove="Voice\Earth.mp3" />
+    <None Remove="Voice\Identified.mp3" />
+    <None Remove="Voice\Jumping.mp3" />
+    <None Remove="Voice\Standby.mp3" />
+    <None Remove="Voice\Terraformable.mp3" />
+    <None Remove="Voice\Unidentified.mp3" />
+    <None Remove="Voice\Water.mp3" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="readme.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-
-    <PackageReference Include="Newtonsoft.Json" Version="12.0.2"/>
+    <Content Include="Voice\Ammonia.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Voice\Dropping.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Voice\Dss.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Voice\Earth.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Voice\Identified.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Voice\Jumping.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Voice\Standby.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Voice\Terraformable.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Voice\Unidentified.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
   </ItemGroup>
-
+  <ItemGroup>
+    <Content Include="Voice\Water.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
 </Project>

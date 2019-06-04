@@ -15,6 +15,7 @@ namespace EdGps.Core
         private FileSystemWatcher watcher = new FileSystemWatcher();
         private Task _task = null;
         private ReaderStatus _status = ReaderStatus.Idle;
+        private bool _isReady = false;
 
         public event EventHandler<FsdJump> OnFsdJump;
         public event EventHandler<FssDiscoveryScan> OnFssDiscoveryScan;
@@ -23,6 +24,7 @@ namespace EdGps.Core
         public event EventHandler<bool> OnAllBodiesFound;
         public event EventHandler<StartJump> OnStartJump;
         public event EventHandler<bool> OnShutdown;
+        public event EventHandler<bool> OnReady;
 
         public JournalReader(string journalDirectory) {
             _directory = new DirectoryInfo(journalDirectory);
@@ -59,7 +61,13 @@ namespace EdGps.Core
                 _status = ReaderStatus.Active;
                 while (!_cancelReader.IsCancellationRequested) {
                     while (!sr.EndOfStream) ReadEvent(Parser.ParseJson(sr.ReadLine()));
-                    while (sr.EndOfStream && !_cancelReader.IsCancellationRequested) await Task.Delay(1000);
+                    while (sr.EndOfStream && !_cancelReader.IsCancellationRequested) {
+                        if (!_isReady) {
+                            _isReady = true;
+                            OnReady?.Invoke(this, _isReady);
+                        }
+                        await Task.Delay(1000);
+                    }
                 }
             }
             _status = ReaderStatus.Stopped;
