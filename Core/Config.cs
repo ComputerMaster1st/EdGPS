@@ -10,7 +10,7 @@ namespace EdGps.Core
         private const string _configName = "config.json";
 
         public string JournalPath { get; private set; } = string.Empty;
-        public bool VoiceEnabled { get; private set; } = false;
+        public bool VoiceEnabled { get; private set; } = true;
 
         [JsonConstructor]
         private Config(string journalPath, bool enableVoice) {
