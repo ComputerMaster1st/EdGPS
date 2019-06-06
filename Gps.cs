@@ -37,63 +37,63 @@ namespace EdGps
             _reader.Start();
         }
 
-        private void OnEnteringHyperspace(object sender, StartJump target) {
+        private async void OnEnteringHyperspace(object sender, StartJump target) {
             _system.Save();
             _nextSystem = target.SystemName;
             _writer.Write(_system, _nextSystem);
-            PlaySound(VoiceType.Jumping);
+            await PlaySound(VoiceType.Jumping);
         }
 
         private void OnShutdown(object sender, bool e) => _system.Save();
         
-        private void OnReady(object sender, bool e) {
+        private async void OnReady(object sender, bool e) {
             _isReady = true;
-            PlaySound(VoiceType.Standby);
+            await PlaySound(VoiceType.Standby);
         }
 
-        private void OnSystemHonk(object sender, FssDiscoveryScan scan) {
+        private async void OnSystemHonk(object sender, FssDiscoveryScan scan) {
             _system.TotalBodies = scan.BodyCount;
             _system.TotalNonBodies = scan.NonBodyCount;
             _system.IsHonked = true;
             _writer.Write(_system, _nextSystem);
-            if (!_system.IsComplete) PlaySound(VoiceType.Unidentified);
+            if (!_system.IsComplete) await PlaySound(VoiceType.Unidentified);
         }
 
-        private void OnEnteringNewSystem(object sender, FsdJump system) {
+        private async void OnEnteringNewSystem(object sender, FsdJump system) {
             _system = StarSystem.Load(system.Name) ?? new StarSystem(system.Name, system.Coordinates);
             Console.Title = $"Elite: Dangerous | Global Positioning System | {_system.Name}";
             _nextSystem = null;
             _writer.Write(_system, _nextSystem);
-            PlaySound(VoiceType.Dropping);
+            await PlaySound(VoiceType.Dropping);
         }
 
-        private void OnSurfaceScan(object sender, DssScan scan) {
+        private async void OnSurfaceScan(object sender, DssScan scan) {
             _system.DssScanned(scan);
             _writer.Write(_system, _nextSystem);
-            PlaySound(VoiceType.Dss);
+            await PlaySound(VoiceType.Dss);
         }
 
-        private void OnBodyScan(object sender, Body body) {
+        private async void OnBodyScan(object sender, Body body) {
             if (_system.IsComplete) return;
 
             _system.AddBody(body);
             _writer.Write(_system, _nextSystem);
 
-            if (!string.IsNullOrEmpty(body.Terraformable)) PlaySound(VoiceType.Terraformable);
-            else if (body.SubType == "Water world") PlaySound(VoiceType.Water);
-            else if (body.SubType == "Earthlike body") PlaySound(VoiceType.Earth);
-            else if (body.SubType == "Ammonia world") PlaySound(VoiceType.Ammonia);
+            if (!string.IsNullOrEmpty(body.Terraformable)) await PlaySound(VoiceType.Terraformable);
+            else if (body.SubType == "Water world") await PlaySound(VoiceType.Water);
+            else if (body.SubType == "Earthlike body") await PlaySound(VoiceType.Earth);
+            else if (body.SubType == "Ammonia world") await PlaySound(VoiceType.Ammonia);
         }
 
-        private void OnAllBodiesFound(object sender, bool isAllFound) {
+        private async void OnAllBodiesFound(object sender, bool isAllFound) {
             _system.IsComplete = isAllFound;
             _writer.Write(_system, _nextSystem);
-            PlaySound(VoiceType.Identified);
+            await PlaySound(VoiceType.Identified);
         }
 
-        private void PlaySound(VoiceType response) {
+        private async Task PlaySound(VoiceType response) {
             if (!_isReady) return;
-            VoicePlayer.Play(response);
+            await VoicePlayer.Play(response);
         }
     }
 }
