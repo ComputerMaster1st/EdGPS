@@ -74,6 +74,8 @@ namespace EdGps
         }
 
         private void OnBodyScan(object sender, Body body) {
+            if (_system.IsComplete) return;
+
             _system.AddBody(body);
             _writer.Write(_system, _nextSystem);
 
