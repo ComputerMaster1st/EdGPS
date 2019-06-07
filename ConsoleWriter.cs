@@ -90,6 +90,9 @@ namespace EdGps
                     ).AppendLine();
                     found++;
                     break;
+                default:
+                    output.AppendFormat("(x)").AppendLine();
+                    break;
                 case BodyType.BlackHole:
                 case BodyType.NeutronStar:
                 case BodyType.WhiteDwarf:
@@ -100,9 +103,6 @@ namespace EdGps
                         discovered
                     ).AppendLine();
                     found++;
-                    break;
-                default:
-                    output.AppendFormat("(x)").AppendLine();
                     break;
             }
 

@@ -89,6 +89,8 @@ namespace EdGps
                     body.Type = BodyType.WhiteDwarf;
                     await PlaySound(VoiceType.WhiteDwarf);
                     break;
+                default:
+                    break;
             }
 
             _system.AddBody(body);
