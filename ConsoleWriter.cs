@@ -61,10 +61,10 @@ namespace EdGps
             var discovered = body.Discovered ? "" : " [Discovered]";
 
             switch (body.Type) {
-                case BodyType.Star:
-                    output.AppendFormat("{0} [{1} Class] [{2} ls]{3}",
+                
+                case BodyType.Belt:
+                    output.AppendFormat("{0} [{1} ls]{2}",
                         body.Name,
-                        body.SubType,
                         body.Distance,
                         discovered
                     ).AppendLine();
@@ -78,8 +78,8 @@ namespace EdGps
                     ).AppendLine();
                     found++;
                     break;
-                case BodyType.Belt:
-                    output.AppendFormat("{0} [{1} ls]{2}",
+                case BodyType.NeutronStar:
+                    output.AppendFormat("{0} [Neutron Star] [{1} ls]{2}",
                         body.Name,
                         body.Distance,
                         discovered
@@ -94,6 +94,15 @@ namespace EdGps
                         discovered,
                         body.Mapped ? " [Is Mapped]" : (body.IsDssScanned ? " [DSS Complete]" : ""),
                         string.IsNullOrWhiteSpace(body.Terraformable) ? "" : " [Terraformable]"
+                    ).AppendLine();
+                    found++;
+                    break;
+                case BodyType.Star:
+                    output.AppendFormat("{0} [{1} Class] [{2} ls]{3}",
+                        body.Name,
+                        body.SubType,
+                        body.Distance,
+                        discovered
                     ).AppendLine();
                     found++;
                     break;

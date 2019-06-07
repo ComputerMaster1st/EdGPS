@@ -75,7 +75,14 @@ namespace EdGps
         }
 
         private async void OnBodyScan(object sender, Body body) {
-            if (body.SubType == "H") body.Type = BodyType.BlackHole;
+            switch (body.SubType) {
+                case "H":
+                    body.Type = BodyType.BlackHole;
+                    break;
+                case "N":
+                    body.Type = BodyType.NeutronStar;
+                    break;
+            }
 
             _system.AddBody(body);
             _writer.Write(_system, _nextSystem);
