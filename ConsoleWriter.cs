@@ -63,7 +63,14 @@ namespace EdGps
             if (body.Type == BodyType.Star) {
                 output.AppendFormat("{0} [{1} Class] [{2} ls]{3}",
                     body.Name,
-                    body.SubType, 
+                    body.SubType,
+                    body.Distance,
+                    discovered
+                ).AppendLine();
+                found++;
+            } else if (body.Type == BodyType.BlackHole) {
+                output.AppendFormat("{0} [Black Hole] [{1} ls]{2}",
+                    body.Name,
                     body.Distance,
                     discovered
                 ).AppendLine();

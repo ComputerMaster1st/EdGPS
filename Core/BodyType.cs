@@ -5,6 +5,7 @@ namespace EdGps.Core
         Star,
         Planet,
         Belt,
+        BlackHole,
         Other
     }
 }

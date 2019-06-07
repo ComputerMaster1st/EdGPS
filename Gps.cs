@@ -75,6 +75,8 @@ namespace EdGps
         }
 
         private async void OnBodyScan(object sender, Body body) {
+            if (body.SubType == "H") body.Type = BodyType.BlackHole;
+
             _system.AddBody(body);
             _writer.Write(_system, _nextSystem);
             if (_system.IsComplete) return;
