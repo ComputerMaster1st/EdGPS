@@ -82,6 +82,9 @@ namespace EdGps
                 case "N":
                     body.Type = BodyType.NeutronStar;
                     break;
+                case "DAZ":
+                    body.Type = BodyType.WhiteDwarf;
+                    break;
             }
 
             _system.AddBody(body);

@@ -70,22 +70,6 @@ namespace EdGps
                     ).AppendLine();
                     found++;
                     break;
-                case BodyType.BlackHole:
-                    output.AppendFormat("{0} [Black Hole] [{1} ls]{2}",
-                        body.Name,
-                        body.Distance,
-                        discovered
-                    ).AppendLine();
-                    found++;
-                    break;
-                case BodyType.NeutronStar:
-                    output.AppendFormat("{0} [Neutron Star] [{1} ls]{2}",
-                        body.Name,
-                        body.Distance,
-                        discovered
-                    ).AppendLine();
-                    found++;
-                    break;
                 case BodyType.Planet:
                     output.AppendFormat("{0} [{1} World] [{2} ls]{3}{4}{5}",
                         body.Name,
@@ -101,6 +85,17 @@ namespace EdGps
                     output.AppendFormat("{0} [{1} Class] [{2} ls]{3}",
                         body.Name,
                         body.SubType,
+                        body.Distance,
+                        discovered
+                    ).AppendLine();
+                    found++;
+                    break;
+                case BodyType.BlackHole:
+                case BodyType.NeutronStar:
+                case BodyType.WhiteDwarf:
+                    output.AppendFormat("{0} [{1}] [{2} ls]{3}",
+                        body.Name,
+                        body.Type.ToString(),
                         body.Distance,
                         discovered
                     ).AppendLine();

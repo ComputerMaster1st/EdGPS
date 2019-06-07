@@ -7,6 +7,7 @@ namespace EdGps.Core
         NeutronStar,
         Other,
         Planet,
-        Star
+        Star,
+        WhiteDwarf
     }
 }
