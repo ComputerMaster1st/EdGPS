@@ -91,6 +91,7 @@ namespace EdGps
         }
 
         private async Task PlaySound(VoiceType response) {
+            if (!_voiceEnabled) return;
             if (!_isReady) return;
             await VoicePlayer.Play(response);
         }
