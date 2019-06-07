@@ -16,9 +16,12 @@ namespace EdGps
 
             var _wmp = new MediaPlayer();
             _wmp.Open(new Uri(Path.GetFullPath(Path.Combine(Directories.VoiceDir, $"{response.ToString()}.mp3"))));
-            _wmp.Volume = 150;
+
+            while (!_wmp.NaturalDuration.HasTimeSpan) await Task.Delay(50);
+
             _wmp.Play();
 
+            await Task.Delay(_wmp.NaturalDuration.TimeSpan);
             _lock.Release();
         }
     }
