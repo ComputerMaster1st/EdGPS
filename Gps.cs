@@ -74,10 +74,9 @@ namespace EdGps
         }
 
         private async void OnBodyScan(object sender, Body body) {
-            if (_system.IsComplete) return;
-
             _system.AddBody(body);
             _writer.Write(_system, _nextSystem);
+            if (_system.IsComplete) return;
 
             if (!string.IsNullOrEmpty(body.Terraformable)) await PlaySound(VoiceType.Terraformable);
             else if (body.SubType == "Water world") await PlaySound(VoiceType.Water);
