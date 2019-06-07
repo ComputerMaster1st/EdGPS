@@ -9,7 +9,7 @@ namespace EdGps
 {
     public static class VoicePlayer
     {
-        private static SemaphoreSlim _lock = new SemaphoreSlim(1);
+        private static readonly SemaphoreSlim _lock = new SemaphoreSlim(1);
 
         public static async Task Play(VoiceType response) {
             await _lock.WaitAsync();
@@ -17,12 +17,9 @@ namespace EdGps
             var _wmp = new MediaPlayer();
             _wmp.Open(new Uri(Path.GetFullPath(Path.Combine(Directories.VoiceDir, $"{response.ToString()}.mp3"))));
             _wmp.Volume = 150;
-
-            var duration = _wmp.NaturalDuration.HasTimeSpan ? _wmp.NaturalDuration.TimeSpan : TimeSpan.Zero;
-
             _wmp.Play();
-            
-            await Task.Delay((int)duration.TotalMilliseconds);
+
+            await Task.Delay((int)_wmp.NaturalDuration.TimeSpan.TotalMilliseconds);
             _lock.Release();
         }
     }
