@@ -3,15 +3,18 @@ namespace EdGps.Core
     public enum VoiceType
     {
         Ammonia,
+        BlackHole,
         Dropping,
-        Earth,
-        Water,
-        Identified,
         Dss,
+        Earth,
+        Identified,
+        Initializing,
         Jumping,
+        NeutronStar,
         Standby,
         Terraformable,
         Unidentified,
-        Initializing
+        Water,
+        WhiteDwarf
     }
 }

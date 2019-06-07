@@ -76,14 +76,18 @@ namespace EdGps
 
         private async void OnBodyScan(object sender, Body body) {
             switch (body.SubType) {
+                // Star Class
                 case "H":
                     body.Type = BodyType.BlackHole;
+                    await PlaySound(VoiceType.BlackHole);
                     break;
                 case "N":
                     body.Type = BodyType.NeutronStar;
+                    await PlaySound(VoiceType.NeutronStar);
                     break;
                 case "DAZ":
                     body.Type = BodyType.WhiteDwarf;
+                    await PlaySound(VoiceType.WhiteDwarf);
                     break;
             }
 
@@ -92,9 +96,18 @@ namespace EdGps
             if (_system.IsComplete) return;
 
             if (!string.IsNullOrEmpty(body.Terraformable)) await PlaySound(VoiceType.Terraformable);
-            else if (body.SubType == "Water world") await PlaySound(VoiceType.Water);
-            else if (body.SubType == "Earthlike body") await PlaySound(VoiceType.Earth);
-            else if (body.SubType == "Ammonia world") await PlaySound(VoiceType.Ammonia);
+
+            switch (body.SubType) {
+                case "Water world":
+                    await PlaySound(VoiceType.Water);
+                    break;
+                case "Earthlike body":
+                    await PlaySound(VoiceType.Earth);
+                    break;
+                case "Ammonia world":
+                    await PlaySound(VoiceType.Ammonia);
+                    break;
+            }
         }
 
         private async void OnAllBodiesFound(object sender, bool isAllFound) {

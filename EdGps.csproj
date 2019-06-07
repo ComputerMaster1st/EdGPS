@@ -5,21 +5,27 @@
   </PropertyGroup>
   <ItemGroup>
     <None Remove="Voice\Ammonia.mp3" />
+    <None Remove="Voice\BlackHole.mp3" />
     <None Remove="Voice\Dropping.mp3" />
     <None Remove="Voice\Dss.mp3" />
     <None Remove="Voice\Earth.mp3" />
     <None Remove="Voice\Identified.mp3" />
     <None Remove="Voice\Jumping.mp3" />
+    <None Remove="Voice\NeutronStar.mp3" />
     <None Remove="Voice\Standby.mp3" />
     <None Remove="Voice\Terraformable.mp3" />
     <None Remove="Voice\Unidentified.mp3" />
     <None Remove="Voice\Water.mp3" />
+    <None Remove="Voice\WhiteDwarf.mp3" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="readme.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Voice\Ammonia.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Voice\BlackHole.mp3">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Voice\Dropping.mp3">
@@ -37,6 +43,9 @@
     <Content Include="Voice\Jumping.mp3">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Voice\NeutronStar.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Voice\Standby.mp3">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -44,6 +53,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Voice\Unidentified.mp3">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Voice\WhiteDwarf.mp3">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
