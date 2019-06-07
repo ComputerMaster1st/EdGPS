@@ -19,7 +19,6 @@ namespace EdGps
             _wmp.Volume = 150;
             _wmp.Play();
 
-            await Task.Delay((int)_wmp.NaturalDuration.TimeSpan.TotalMilliseconds);
             _lock.Release();
         }
     }
