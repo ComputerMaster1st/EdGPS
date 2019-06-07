@@ -60,39 +60,47 @@ namespace EdGps
 
             var discovered = body.Discovered ? "" : " [Discovered]";
 
-            if (body.Type == BodyType.Star) {
-                output.AppendFormat("{0} [{1} Class] [{2} ls]{3}",
-                    body.Name,
-                    body.SubType,
-                    body.Distance,
-                    discovered
-                ).AppendLine();
-                found++;
-            } else if (body.Type == BodyType.BlackHole) {
-                output.AppendFormat("{0} [Black Hole] [{1} ls]{2}",
-                    body.Name,
-                    body.Distance,
-                    discovered
-                ).AppendLine();
-                found++;
-            } else if (body.Type == BodyType.Belt) {
-                output.AppendFormat("{0} [{1} ls]{2}",
-                    body.Name,
-                    body.Distance,
-                    discovered
-                ).AppendLine();
-                found++;
-            } else if (body.Type == BodyType.Planet) {
-                output.AppendFormat("{0} [{1} World] [{2} ls]{3}{4}{5}",
-                    body.Name,
-                    body.SubType, 
-                    body.Distance,
-                    discovered,
-                    body.Mapped ? " [Is Mapped]" : (body.IsDssScanned ? " [DSS Complete]" : ""),
-                    string.IsNullOrWhiteSpace(body.Terraformable) ? "" : " [Terraformable]"
-                ).AppendLine();
-                found++;
-            } else output.AppendFormat("(x)").AppendLine();
+            switch (body.Type) {
+                case BodyType.Star:
+                    output.AppendFormat("{0} [{1} Class] [{2} ls]{3}",
+                        body.Name,
+                        body.SubType,
+                        body.Distance,
+                        discovered
+                    ).AppendLine();
+                    found++;
+                    break;
+                case BodyType.BlackHole:
+                    output.AppendFormat("{0} [Black Hole] [{1} ls]{2}",
+                        body.Name,
+                        body.Distance,
+                        discovered
+                    ).AppendLine();
+                    found++;
+                    break;
+                case BodyType.Belt:
+                    output.AppendFormat("{0} [{1} ls]{2}",
+                        body.Name,
+                        body.Distance,
+                        discovered
+                    ).AppendLine();
+                    found++;
+                    break;
+                case BodyType.Planet:
+                    output.AppendFormat("{0} [{1} World] [{2} ls]{3}{4}{5}",
+                        body.Name,
+                        body.SubType,
+                        body.Distance,
+                        discovered,
+                        body.Mapped ? " [Is Mapped]" : (body.IsDssScanned ? " [DSS Complete]" : ""),
+                        string.IsNullOrWhiteSpace(body.Terraformable) ? "" : " [Terraformable]"
+                    ).AppendLine();
+                    found++;
+                    break;
+                default:
+                    output.AppendFormat("(x)").AppendLine();
+                    break;
+            }
 
             var numberOfChildren = body.SubBodies.Count;
             var orderedSubBodies = body.SubBodies.OrderBy(f => f.Id).ToList();
