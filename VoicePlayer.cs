@@ -7,11 +7,11 @@ using EdGps.Core;
 
 namespace EdGps
 {
-    public static class VoicePlayer
+    public class VoicePlayer
     {
-        private static readonly SemaphoreSlim _lock = new SemaphoreSlim(1);
+        private readonly SemaphoreSlim _lock = new SemaphoreSlim(1);
 
-        public static async Task Play(VoiceType response) {
+        public async Task Play(VoiceType response) {
             await _lock.WaitAsync();
 
             var _wmp = new MediaPlayer();

@@ -10,6 +10,7 @@ namespace EdGps
     {
         private JournalReader _reader;
         private ConsoleWriter _writer;
+        private VoicePlayer _voice = new VoicePlayer();
         private StarSystem _system = null;
         private string _nextSystem = null;
         private bool _isReady = false;
@@ -93,7 +94,7 @@ namespace EdGps
         private async Task PlaySound(VoiceType response) {
             if (!_voiceEnabled) return;
             if (!_isReady) return;
-            await VoicePlayer.Play(response);
+            await _voice.Play(response);
         }
     }
 }
