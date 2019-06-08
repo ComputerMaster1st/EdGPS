@@ -22,7 +22,7 @@ namespace EdGps
             _voiceEnabled = config.VoiceEnabled;
         }
 
-        public void Start() {
+        public void Start(bool rebuild = false) {
             _reader.OnAllBodiesFound += OnAllBodiesFound;
             _reader.OnBodyScan += OnBodyScan;
             _reader.OnDssScan += OnSurfaceScan;
@@ -35,6 +35,8 @@ namespace EdGps
             _system = StarSystem.Load() ?? new StarSystem("Waiting...", new List<double>() { 0, 0, 0 });
             Console.Title = $"Elite: Dangerous | Global Positioning System | {_system.Name}";
             _writer.Write(_system);
+
+            if (rebuild) _reader.Rebuild();
             _reader.Start();
         }
 

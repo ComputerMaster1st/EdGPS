@@ -52,8 +52,23 @@ namespace EdGps.Core
         private FileInfo GetJournal()
             => _directory.GetFiles()
                 .Where(f => f.Extension == ".log")
-                .OrderByDescending(f => f.LastWriteTime)
+                .OrderByDescending(f => f.Name)
                 .First();
+
+        public void Rebuild() {
+            new DirectoryInfo(Directories.SystemDir).Delete(true);
+            var journalFiles = _directory.GetFiles()
+                .Where(f => f.Extension == ".log")
+                .OrderBy(f => f.Name);
+            Directory.CreateDirectory(Directories.SystemDir);
+
+            foreach (var journal in journalFiles) {
+                using FileStream fs = journal.Open(FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+                using StreamReader sr = new StreamReader(fs);
+                while (!sr.EndOfStream)
+                    ReadEvent(Parser.ParseJson(sr.ReadLine()));
+            }
+        }
 
         private async Task RunAsync(FileInfo journalFile) {
             using (FileStream fs = journalFile.Open(FileMode.Open, FileAccess.Read, FileShare.ReadWrite)) 

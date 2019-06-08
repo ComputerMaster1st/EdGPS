@@ -9,7 +9,7 @@ namespace EdGps
     {
         private Gps _gps = null;
 
-        public static void Main() {
+        public static void Main(string[] args = null) {
             Console.Title = "Elite: Dangerous | Global Positioning System";
             if (!Directory.Exists(Directories.SystemDir)) Directory.CreateDirectory(Directories.SystemDir);
 
@@ -66,12 +66,15 @@ namespace EdGps
             }
 
             // If everything's okay, move on
-            new Program().StartAsync(config).GetAwaiter().GetResult();
+            var rebuild = false;
+            if (args.Length > 0 && args[0] == "--rebuild") rebuild = true;
+
+            new Program().StartAsync(config, rebuild).GetAwaiter().GetResult();
         }
 
-        public async Task StartAsync(Config config) {
+        public async Task StartAsync(Config config, bool rebuild = false) {
             _gps = new Gps(config);
-            _gps.Start();
+            _gps.Start(rebuild);
             await Task.Delay(-1);
         }
     }
