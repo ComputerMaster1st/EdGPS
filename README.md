@@ -20,6 +20,7 @@ The E:D GPS is just a concept and was never designed for production usage. Pleas
 * Target System Name (*Only displayed as you enter hyperspace*)
 * System Co-ordinates
 * Scan Status
+* Distance From Sol
 * Number of (non-)bodies (*Only shown after discovery scan*)
 * (Non-)Bodies & their position in the system.
 
