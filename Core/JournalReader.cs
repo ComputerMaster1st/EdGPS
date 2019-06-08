@@ -55,8 +55,7 @@ namespace EdGps.Core
                 .OrderByDescending(f => f.Name)
                 .First();
 
-        public void Rebuild() {
-            new DirectoryInfo(Directories.SystemDir).Delete(true);
+        public void Build() {
             var journalFiles = _directory.GetFiles()
                 .Where(f => f.Extension == ".log")
                 .OrderBy(f => f.Name);

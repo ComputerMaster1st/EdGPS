@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using EdGps.Core;
 
@@ -9,7 +10,7 @@ namespace EdGps
     {
         private Gps _gps = null;
 
-        public static void Main(string[] args = null) {
+        public static void Main() {
             Console.Title = "Elite: Dangerous | Global Positioning System";
             if (!Directory.Exists(Directories.SystemDir)) Directory.CreateDirectory(Directories.SystemDir);
 
@@ -66,10 +67,9 @@ namespace EdGps
             }
 
             // If everything's okay, move on
-            var rebuild = false;
-            if (args.Length > 0 && args[0] == "--rebuild") rebuild = true;
-
-            new Program().StartAsync(config, rebuild).GetAwaiter().GetResult();
+            var build = false;
+            if (new DirectoryInfo(Directories.SystemDir).EnumerateFiles().Count() < 1) build = true;
+            new Program().StartAsync(config, build).GetAwaiter().GetResult();
         }
 
         public async Task StartAsync(Config config, bool rebuild = false) {
