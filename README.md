@@ -24,16 +24,27 @@ The E:D GPS is just a concept and was never designed for production usage. Pleas
 There are various "tags" which are shown, depending on various conditions.
 
 `[Discovered]` - Shows you've first discovered the body
+
 `[BlackHole]` - Black hole
+
 `[NeutronStar]` - Neutron Star
+
 `[WhiteDwarf]` - White Dwarf
+
 `[* Class]` - Star Class
+
 `[* ls]` - Distance to body in light-seconds
+
 `[* World]` - World/Moon Class
+
 `[Is Mapped]` - Body already DSS Scanned
+
 `[DSS Complete]` - Body fully DSS Scanned
+
 `[Terraformable]` - Body is candidate for terraforming
+
 `[Awaiting FSS Discovery Scan]` - Waiting for discovery scan
+
 `[System Scan Complete]` - System Scan Completed
 
 You'll also find there'll `(x)` where the body name should be. This is to indicate that it's either not discovered yet, or is a ring/barycenter. It's not that important basically. The tree in which the bodies are displayed in are ordered the same way as the system map (*although questionable due to how the logs are written*).
