@@ -3,7 +3,7 @@
 ## Summary
 Twitch Clip : [E:D GPS Demonstration](https://www.twitch.tv/videos/430282763)
 
-Recent Updates : [Updates - Index](https://github.com/ComputerMaster1st/EdGPS/wiki/Updates---Index)
+Recent Updates : [Updates - Index](https://github.com/ComputerMaster1st/EdGPS/wiki)
 
 The tool works by constantly watching the newest "journal*.log" for any changes and processes those changes into usable data to be displayed. It's basically a system map combined with galaxy map, although it's pretty basic. It also saves the system data to a sub-directory so you have your own little "Universal Cartography" database. It'll also load up the last system you were in on startup. From a user's perspective, it can be really handy to have running in the background as you can just take a quick glance at it and know what you want to DSS as well as what you've first discovered.
 
