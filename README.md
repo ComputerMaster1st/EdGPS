@@ -56,7 +56,7 @@ Windows : [x86](https://www.dropbox.com/s/xrwtf94y4f71njx/EdGPS-x86.zip?dl=0) | 
 If you wish to download & compile from source, please be sure to have the [.NETCore 3.0 SDK](https://dotnet.microsoft.com/download) installed and have knowledge on using it.
 
 ## Start E:D GPS
-To launch the GPS, find & run "EdGps.exe". All builds are self-contained. This means you do not need to download any additional software.
+To launch the GPS, find & run "EdGps.exe". All builds are self-contained. This means you do not need to download any additional software. When you first launch, the GPS will begin auto-building all the system data from the journal logs. This process will take some time depending on how many & how big the logs are.
 
 ## How to turn off voice?
 When you launch the GPS, it'll generate a `config.json` file. Inside, change the value of `VoiceEnabled` from `true` to `false`.
