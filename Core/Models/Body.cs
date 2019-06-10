@@ -9,6 +9,7 @@ namespace EdGps.Core.Models
         public string Name { get; set; } = string.Empty;
         public BodyType Type { get; set; } = BodyType.Other;
         public string SubType { get; set; } = string.Empty;
+        public double Mass { get; set; } = 0;
         public List<int> Parents { get; set; } = new List<int>();
         public double Distance { get; set; } = -1;
         public bool Discovered { get; set; }

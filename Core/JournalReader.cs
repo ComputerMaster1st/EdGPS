@@ -107,11 +107,13 @@ namespace EdGps.Core
 
                     if (rawData.ContainsKey("StarType")) {
                         body.Type = BodyType.Star;
-                        body.SubType = rawData["StarType"].ToString();
+                        body.SubType = (string)rawData["StarType"];
+                        body.Mass = (double)rawData["StellarMass"];
                     } else if (rawData.ContainsKey("PlanetClass")) {
                         body.Type = BodyType.Planet;
-                        body.SubType = rawData["PlanetClass"].ToString();
-                        body.Terraformable = rawData["TerraformState"].ToString();
+                        body.SubType = (string)rawData["PlanetClass"];
+                        body.Terraformable = (string)rawData["TerraformState"];
+                        body.Mass = (double)rawData["MassEM"];
                     } else body.Type = BodyType.Belt;
 
                     OnBodyScan?.Invoke(this, body);
