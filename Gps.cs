@@ -40,56 +40,56 @@ namespace EdGps
             _reader.Start();
         }
 
-        private async void OnEnteringHyperspace(object sender, StartJump target) {
+        private void OnEnteringHyperspace(object sender, StartJump target) {
             _system.Save();
             _nextSystem = target.SystemName;
             _writer.Write(_system, _nextSystem);
-            await PlaySound(VoiceType.Jumping);
+            PlaySound(VoiceType.Jumping);
         }
 
         private void OnShutdown(object sender, bool e) => _system.Save();
         
-        private async void OnReady(object sender, bool e) {
+        private void OnReady(object sender, bool e) {
             _isReady = true;
-            await PlaySound(VoiceType.Standby);
+            PlaySound(VoiceType.Standby);
         }
 
-        private async void OnSystemHonk(object sender, FssDiscoveryScan scan) {
+        private void OnSystemHonk(object sender, FssDiscoveryScan scan) {
             _system.TotalBodies = scan.BodyCount;
             _system.TotalNonBodies = scan.NonBodyCount;
             _system.IsHonked = true;
             _writer.Write(_system, _nextSystem);
-            if (!_system.IsComplete) await PlaySound(VoiceType.Unidentified);
+            if (!_system.IsComplete) PlaySound(VoiceType.Unidentified);
         }
 
-        private async void OnEnteringNewSystem(object sender, FsdJump system) {
+        private void OnEnteringNewSystem(object sender, FsdJump system) {
             _system = StarSystem.Load(system.Name) ?? new StarSystem(system.Name, system.Coordinates);
             Console.Title = $"Elite: Dangerous | Global Positioning System | {_system.Name}";
             _nextSystem = null;
             _writer.Write(_system, _nextSystem);
-            await PlaySound(VoiceType.Dropping);
+            PlaySound(VoiceType.Dropping);
         }
 
-        private async void OnSurfaceScan(object sender, DssScan scan) {
+        private void OnSurfaceScan(object sender, DssScan scan) {
             _system.DssScanned(scan);
             _writer.Write(_system, _nextSystem);
-            await PlaySound(VoiceType.Dss);
+            PlaySound(VoiceType.Dss);
         }
 
-        private async void OnBodyScan(object sender, Body body) {
+        private void OnBodyScan(object sender, Body body) {
             switch (body.SubType) {
                 // Star Class
                 case "H":
                     body.Type = BodyType.Black_Hole;
-                    await PlaySound(VoiceType.BlackHole);
+                    PlaySound(VoiceType.BlackHole);
                     break;
                 case "N":
                     body.Type = BodyType.Neutron_Star;
-                    await PlaySound(VoiceType.NeutronStar);
+                    PlaySound(VoiceType.NeutronStar);
                     break;
                 case "DAZ":
                     body.Type = BodyType.White_Dwarf;
-                    await PlaySound(VoiceType.WhiteDwarf);
+                    PlaySound(VoiceType.WhiteDwarf);
                     break;
                 case "TTS":
                     body.Type = BodyType.T_Tauri_Star;
@@ -102,31 +102,31 @@ namespace EdGps
             _writer.Write(_system, _nextSystem);
             if (_system.IsComplete) return;
 
-            if (!string.IsNullOrEmpty(body.Terraformable)) await PlaySound(VoiceType.Terraformable);
+            if (!string.IsNullOrEmpty(body.Terraformable)) PlaySound(VoiceType.Terraformable);
 
             switch (body.SubType) {
                 case "Water world":
-                    await PlaySound(VoiceType.Water);
+                    PlaySound(VoiceType.Water);
                     break;
                 case "Earthlike body":
-                    await PlaySound(VoiceType.Earth);
+                    PlaySound(VoiceType.Earth);
                     break;
                 case "Ammonia world":
-                    await PlaySound(VoiceType.Ammonia);
+                    PlaySound(VoiceType.Ammonia);
                     break;
             }
         }
 
-        private async void OnAllBodiesFound(object sender, bool isAllFound) {
+        private void OnAllBodiesFound(object sender, bool isAllFound) {
             _system.IsComplete = isAllFound;
             _writer.Write(_system, _nextSystem);
-            await PlaySound(VoiceType.Identified);
+            PlaySound(VoiceType.Identified);
         }
 
-        private async Task PlaySound(VoiceType response) {
+        private void PlaySound(VoiceType response) {
             if (!_voiceEnabled) return;
             if (!_isReady) return;
-            await _voice.Play(response);
+            _ = Task.Run(async () => await _voice.Play(response));
         }
     }
 }
