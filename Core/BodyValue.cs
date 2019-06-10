@@ -14,7 +14,8 @@ namespace EdGps.Core
         public static int GetStarValue(BodyType type, double mass) {
             switch (type) {
                 case BodyType.Star:
-                    return (int)Math.Round(Star + ((mass * Star) / StarFactor));
+                    var calc = Star + ((mass * Star) / StarFactor);
+                    return (int)Math.Round(calc);
                 case BodyType.Black_Hole:
                     return (int)Math.Round(BlackHole + ((mass * BlackHole) / StarFactor));
                 case BodyType.Neutron_Star:

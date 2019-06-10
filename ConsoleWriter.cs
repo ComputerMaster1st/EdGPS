@@ -86,10 +86,11 @@ namespace EdGps
                     found++;
                     break;
                 case BodyType.Star:
-                    output.AppendFormat("{0}{1}{2}{3}",
+                    output.AppendFormat("{0}{1}{2}{3}{4}",
                         body.Name,
                         AddBrackets($"Class {body.SubType}"),
                         AddBrackets($"{distance} ls"),
+                        AddBrackets($"{BodyValue.GetStarValue(body.Type, body.Mass)} cr"),
                         discovered
                     ).AppendLine();
                     found++;
