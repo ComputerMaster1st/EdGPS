@@ -90,19 +90,20 @@ namespace EdGps
                     ).AppendLine();
                     found++;
                     break;
-                default:
-                    output.AppendFormat("(x)").AppendLine();
-                    break;
-                case BodyType.BlackHole:
-                case BodyType.NeutronStar:
-                case BodyType.WhiteDwarf:
+                case BodyType.Black_Hole:
+                case BodyType.Neutron_Star:
+                case BodyType.White_Dwarf:
+                case BodyType.T_Tauri_Star:
                     output.AppendFormat("{0} [{1}] [{2} ls]{3}",
                         body.Name,
-                        body.Type.ToString(),
+                        body.Type.ToString().Replace('_', ' '),
                         body.Distance,
                         discovered
                     ).AppendLine();
                     found++;
+                    break;
+                default:
+                    output.AppendFormat("(x)").AppendLine();
                     break;
             }
 

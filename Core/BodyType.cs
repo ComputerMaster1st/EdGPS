@@ -6,8 +6,9 @@ namespace EdGps.Core
         Planet,
         Belt,
         Other,
-        BlackHole,
-        NeutronStar,
-        WhiteDwarf
+        Black_Hole,
+        Neutron_Star,
+        White_Dwarf,
+        T_Tauri_Star
     }
 }

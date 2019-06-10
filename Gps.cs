@@ -80,16 +80,19 @@ namespace EdGps
             switch (body.SubType) {
                 // Star Class
                 case "H":
-                    body.Type = BodyType.BlackHole;
+                    body.Type = BodyType.Black_Hole;
                     await PlaySound(VoiceType.BlackHole);
                     break;
                 case "N":
-                    body.Type = BodyType.NeutronStar;
+                    body.Type = BodyType.Neutron_Star;
                     await PlaySound(VoiceType.NeutronStar);
                     break;
                 case "DAZ":
-                    body.Type = BodyType.WhiteDwarf;
+                    body.Type = BodyType.White_Dwarf;
                     await PlaySound(VoiceType.WhiteDwarf);
+                    break;
+                case "TTS":
+                    body.Type = BodyType.T_Tauri_Star;
                     break;
                 default:
                     break;
