@@ -19,11 +19,13 @@ namespace EdGps
             var orbits = new StringBuilder();
 
             foreach (var body in bodies)
-                PrintBody(body, orbits, ref found, "", true);
+                PrintBody(system.Name, body, orbits, ref found, "", true);
 
             Console.Clear();
             Console.WriteLine(CreateHeader(system, found, nextSystem) + orbits.ToString());
         }
+
+        private string AddBrackets(string input) => $" ■ {input}";
 
         private string CreateHeader(StarSystem system, int found, string nextSystem = null) {
             double percentage =  0.00;
@@ -38,16 +40,16 @@ namespace EdGps
                 .AppendLine()
                 .AppendFormat("Current System  : {0} {1}", system.Name, string.IsNullOrEmpty(nextSystem) ? "" : $"=> Jumping To {nextSystem}").AppendLine()
                 .AppendFormat("Co-ordinates    : Latitude ({0}) | Longitude ({1}) | Elevation ({2})", system.Latitude, system.Longitude, system.Elevation).AppendLine()
-                .AppendFormat("Distance (Ly)   : {0} (Sol)", Math.Round(Math.Pow(Math.Pow(system.Longitude, 2) + 
-                    Math.Pow(system.Latitude, 2) + Math.Pow(system.Elevation, 2), 0.5), 2)).AppendLine()
-                .AppendFormat("System Scan     : {0}% Complete {1}", Math.Round(percentage, 0), system.IsComplete ? "[System Scan Complete]" : "").AppendLine()
-                .AppendFormat("Expected Bodies : {0} ({1} non-bodies) {2}", system.TotalBodies, system.TotalNonBodies, system.IsHonked ? "" : "[Awaiting FSS Disovery Scan]").AppendLine()
+                .AppendFormat("Distance (Ly)   : {0} (Sol)", string.Format("{0:n0}", Math.Round(Math.Pow(Math.Pow(system.Longitude, 2) + 
+                    Math.Pow(system.Latitude, 2) + Math.Pow(system.Elevation, 2), 0.5), 2))).AppendLine()
+                .AppendFormat("System Scan     : {0}% Complete{1}", Math.Round(percentage, 0), system.IsComplete ? AddBrackets("System Scan Complete") : "").AppendLine()
+                .AppendFormat("Expected Bodies : {0} ({1} non-bodies){2}", system.TotalBodies, system.TotalNonBodies, system.IsHonked ? "" : AddBrackets("Awaiting FSS Discovery Scan")).AppendLine()
                 .AppendLine("════════════════════════════════════════════════════════════════════════════════════════════════════");
 
             return output.ToString();
         }
 
-        private void PrintBody(Body body, StringBuilder output, ref int found, string indent, bool isLast) {
+        private void PrintBody(string systemName, Body body, StringBuilder output, ref int found, string indent, bool isLast) {
             output.AppendFormat(indent);
 
             if (isLast) {
@@ -58,46 +60,56 @@ namespace EdGps
                 indent += _vertical;
             }
 
-            var discovered = body.Discovered ? "" : " [Discovered]";
+            var discovered = body.Discovered ? "" : AddBrackets("Discovered");
+            var bodyName = body.Name.Replace(systemName, "");
+            var distance = string.Format("{0:n0}", body.Distance);
 
             switch (body.Type) {
                 
                 case BodyType.Belt:
-                    output.AppendFormat("{0} [{1} ls]{2}",
-                        body.Name,
-                        body.Distance,
+                    output.AppendFormat("{0}{1}{2}",
+                        bodyName,
+                        AddBrackets($"{distance} ls"),
                         discovered
                     ).AppendLine();
                     found++;
                     break;
                 case BodyType.Planet:
-                    output.AppendFormat("{0} [{1} World] [{2} ls]{3}{4}{5}",
-                        body.Name,
-                        body.SubType,
-                        body.Distance,
+                    output.AppendFormat("{0}{1}{2}{3}{4}{5}",
+                        bodyName,
+                        AddBrackets($"{body.SubType}"),
+                        AddBrackets($"{distance} ls"),
                         discovered,
-                        body.Mapped ? " [Is Mapped]" : (body.IsDssScanned ? " [DSS Complete]" : ""),
-                        string.IsNullOrWhiteSpace(body.Terraformable) ? "" : " [Terraformable]"
+                        body.Mapped ? AddBrackets("Is Mapped") : (body.IsDssScanned ? AddBrackets("DSS Complete") : ""),
+                        string.IsNullOrWhiteSpace(body.Terraformable) ? "" : AddBrackets("Terraformable")
                     ).AppendLine();
                     found++;
                     break;
                 case BodyType.Star:
-                    output.AppendFormat("{0} [{1} Class] [{2} ls]{3}",
+                    output.AppendFormat("{0}{1}{2}{3}",
                         body.Name,
-                        body.SubType,
-                        body.Distance,
+                        AddBrackets($"Class {body.SubType}"),
+                        AddBrackets($"{distance} ls"),
+                        discovered
+                    ).AppendLine();
+                    found++;
+                    break;
+                case BodyType.White_Dwarf:
+                    output.AppendFormat("{0}{1}{2}{3}",
+                        body.Name,
+                        AddBrackets($"White Dwarf ({body.SubType})"),
+                        AddBrackets($"{distance} ls"),
                         discovered
                     ).AppendLine();
                     found++;
                     break;
                 case BodyType.Black_Hole:
                 case BodyType.Neutron_Star:
-                case BodyType.White_Dwarf:
                 case BodyType.T_Tauri_Star:
-                    output.AppendFormat("{0} [{1}] [{2} ls]{3}",
+                    output.AppendFormat("{0}{1}{2}{3}",
                         body.Name,
-                        body.Type.ToString().Replace('_', ' '),
-                        body.Distance,
+                        AddBrackets(body.Type.ToString().Replace('_', ' ')),
+                        AddBrackets($"{distance} ls"),
                         discovered
                     ).AppendLine();
                     found++;
@@ -112,7 +124,7 @@ namespace EdGps
             for (var i = 0; i < numberOfChildren; i++) {
                 var child = orderedSubBodies[i];
                 var isLast2 = (i == (numberOfChildren - 1));
-                PrintBody(child, output, ref found, indent, isLast2);
+                PrintBody(systemName, child, output, ref found, indent, isLast2);
             }
         }
     }
