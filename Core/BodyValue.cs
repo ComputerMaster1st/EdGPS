@@ -81,7 +81,7 @@ namespace EdGps.Core
             var isFirstDiscovered = !body.Discovered;
             var isFirstMapped = !body.Mapped && body.IsDssScanned ? true : false;
 
-            if (body.Mapped || isFirstMapped) {
+            if (body.Mapped && body.IsDssScanned || isFirstMapped) {
                 if (isFirstDiscovered && isFirstMapped) mappingMultiplier = 3.699622554;
                 else if (isFirstMapped) mappingMultiplier = 8.0956;
                 else mappingMultiplier = 3.3333333333;
