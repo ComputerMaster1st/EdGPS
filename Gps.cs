@@ -94,6 +94,29 @@ namespace EdGps
                 case "TTS":
                     body.Type = BodyType.T_Tauri_Star;
                     break;
+                // World Class
+                case string val when val.Contains("gas giant", StringComparison.CurrentCultureIgnoreCase):
+                    if (val.Contains("class II gas giant")) body.Type = BodyType.GasGiant2;
+                    else body.Type = BodyType.GasGiant;
+                    break;
+                case "Water world":
+                    PlaySound(VoiceType.Water);
+                    body.Type = BodyType.WaterWorld;
+                    break;
+                case "Earthlike body":
+                    PlaySound(VoiceType.Earth);
+                    body.Type = BodyType.EarthlikeWorld;
+                    break;
+                case "Ammonia world":
+                    PlaySound(VoiceType.Ammonia);
+                    body.Type = BodyType.AmmoniaWorld;
+                    break;
+                case "High metal content body":
+                    body.Type = BodyType.HighMetalContent;
+                    break;
+                case "Metal rich body":
+                    body.Type = BodyType.MetalRich;
+                    break;
                 default:
                     break;
             }
@@ -103,18 +126,6 @@ namespace EdGps
             if (_system.IsComplete) return;
 
             if (!string.IsNullOrEmpty(body.Terraformable)) PlaySound(VoiceType.Terraformable);
-
-            switch (body.SubType) {
-                case "Water world":
-                    PlaySound(VoiceType.Water);
-                    break;
-                case "Earthlike body":
-                    PlaySound(VoiceType.Earth);
-                    break;
-                case "Ammonia world":
-                    PlaySound(VoiceType.Ammonia);
-                    break;
-            }
         }
 
         private void OnAllBodiesFound(object sender, bool isAllFound) {
