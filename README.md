@@ -5,6 +5,8 @@ Twitch Clip : [E:D GPS Demonstration](https://www.twitch.tv/videos/430282763)
 
 Upcoming Update : [System/Body Value!](https://github.com/ComputerMaster1st/EdGPS/wiki/Upcoming!)
 
+Latest Update : * [June 11th '19 - System & Body Values](https://github.com/ComputerMaster1st/EdGPS/wiki/June-11th-'19)
+
 Recent Updates : [Updates - Index](https://github.com/ComputerMaster1st/EdGPS/wiki)
 
 The tool works by constantly watching the newest "journal*.log" for any changes and processes those changes into usable data to be displayed. It's basically a system map combined with galaxy map, although it's pretty basic. It also saves the system data to a sub-directory so you have your own little "Universal Cartography" database. It'll also load up the last system you were in on startup. From a user's perspective, it can be really handy to have running in the background as you can just take a quick glance at it and know what you want to DSS as well as what you've first discovered.
@@ -55,7 +57,7 @@ There are various "tags" which are shown, depending on various conditions.
 You'll also find there'll `(x)` where the body name should be. This is to indicate that it's either not discovered yet, or is a ring/barycenter. It's not that important basically. The tree in which the bodies are displayed in are ordered the same way as the system map (*although questionable due to how the logs are written*).
 
 ## Download
-Windows : [x86](https://www.dropbox.com/s/xrwtf94y4f71njx/EdGPS-x86.zip?dl=0) | [x64](https://www.dropbox.com/s/cumn62aeyiewyjj/EdGPS-x64.zip?dl=0) (Last Compiled @ 8th June 1:20PM UTC 0)
+Windows : [x86](https://www.dropbox.com/s/xrwtf94y4f71njx/EdGPS-x86.zip?dl=0) | [x64](https://www.dropbox.com/s/cumn62aeyiewyjj/EdGPS-x64.zip?dl=0) (Last Compiled @ 11th June 6:57PM UTC 0)
 
 ### Compile From Source
 If you wish to download & compile from source, please be sure to have the [.NETCore 3.0 SDK](https://dotnet.microsoft.com/download) installed and have knowledge on using it.
