@@ -38,6 +38,8 @@ There are various "tags" which are shown, depending on various conditions.
 
 `[WhiteDwarf]` - White Dwarf
 
+`[T Tauri Star]` - T Tauri Star
+
 `[* Class]` - Star Class
 
 `[* ls]` - Distance to body in light-seconds
@@ -67,3 +69,6 @@ To launch the GPS, find & run "EdGps.exe". All builds are self-contained. This m
 
 ## How to turn off voice?
 When you launch the GPS, it'll generate a `config.json` file. Inside, change the value of `VoiceEnabled` from `true` to `false`.
+
+## Can I contribute to the project?
+Yes! If you have anything of use to the GPS, feel free to fork the repository and make your changes.
