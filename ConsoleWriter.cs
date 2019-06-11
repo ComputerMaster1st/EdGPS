@@ -107,6 +107,13 @@ namespace EdGps
                     confirmedBodies.Add(body, (0, 0));
                     break;
                 case BodyType.Planet:
+                case BodyType.AmmoniaWorld:
+                case BodyType.EarthlikeWorld:
+                case BodyType.GasGiant:
+                case BodyType.GasGiant2:
+                case BodyType.HighMetalContent:
+                case BodyType.MetalRich:
+                case BodyType.WaterWorld:
                     output.AppendFormat("{0}{1}{2}{3}{4}{5}{6}",
                         bodyName,
                         AddBrackets($"{body.SubType}"),
