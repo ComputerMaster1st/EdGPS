@@ -34,6 +34,7 @@ namespace EdGps.Core
             switch (body.Type) {
                 // Stars
                 case BodyType.Star:
+                case BodyType.T_Tauri_Star:
                     return GetStarValue(Star, body);
                 case BodyType.Black_Hole:
                     return GetStarValue(BlackHole, body);
