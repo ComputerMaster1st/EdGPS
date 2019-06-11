@@ -42,7 +42,7 @@ namespace EdGps
             Console.WriteLine(CreateHeader(system, confirmedBodies.Count, totalValue, totalHonkValue, nextSystem) + orbits.ToString());
         }
 
-        public static string AddBrackets(string input) => $" ■ {input}";
+        public static string AddBrackets(string input) => $" - {input}";
 
         private string CreateHeader(StarSystem system, int found, int totalValue, int totalHonkValue, string nextSystem = null) {
             double percentage =  0.00;
