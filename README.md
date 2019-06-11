@@ -5,7 +5,7 @@ Twitch Clip : [E:D GPS Demonstration](https://www.twitch.tv/videos/430282763)
 
 Upcoming Update : [System/Body Value!](https://github.com/ComputerMaster1st/EdGPS/wiki/Upcoming!)
 
-Latest Update : * [June 11th '19 - System & Body Values](https://github.com/ComputerMaster1st/EdGPS/wiki/June-11th-'19)
+Latest Update : [June 11th '19 - System & Body Values](https://github.com/ComputerMaster1st/EdGPS/wiki/June-11th-'19)
 
 Recent Updates : [Updates - Index](https://github.com/ComputerMaster1st/EdGPS/wiki)
 
