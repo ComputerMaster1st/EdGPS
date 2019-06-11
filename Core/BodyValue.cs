@@ -11,7 +11,7 @@ namespace EdGps.Core
         private const int BlackHole = 22628;
         private const int WhiteDwarf = 14057;
 
-        public static int GetStarValue(BodyType type, double mass) {
+        public static int GetBodyValue(BodyType type, double mass) {
             switch (type) {
                 case BodyType.Star:
                     var calc = Star + ((mass * Star) / StarFactor);

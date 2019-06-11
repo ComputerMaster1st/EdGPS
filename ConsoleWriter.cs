@@ -63,6 +63,7 @@ namespace EdGps
             var discovered = body.Discovered ? "" : AddBrackets("Discovered");
             var bodyName = body.Name.Replace(systemName, "");
             var distance = string.Format("{0:n0}", body.Distance);
+            var bodyValue = AddBrackets($"{BodyValue.GetBodyValue(body.Type, body.Mass)} cr");
 
             switch (body.Type) {
                 
@@ -90,7 +91,7 @@ namespace EdGps
                         body.Name,
                         AddBrackets($"Class {body.SubType}"),
                         AddBrackets($"{distance} ls"),
-                        AddBrackets($"{BodyValue.GetStarValue(body.Type, body.Mass)} cr"),
+                        bodyValue,
                         discovered
                     ).AppendLine();
                     found++;

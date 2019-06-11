@@ -72,7 +72,7 @@ namespace EdGps.Core
                     parentBody.Name = newBody.Name;
                     parentBody.SubType = newBody.SubType;
                     parentBody.Type = newBody.Type;
-
+                    parentBody.Mass = newBody.Mass;
                     return;
                 } else return;
             }
