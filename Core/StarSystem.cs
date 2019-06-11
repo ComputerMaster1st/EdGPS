@@ -76,6 +76,7 @@ namespace EdGps.Core
                     parentBody.SubType = newBody.SubType;
                     parentBody.Type = newBody.Type;
                     parentBody.Mass = newBody.Mass;
+                    parentBody.Terraformable = newBody.Terraformable;
                     return;
                 } else return;
             }
