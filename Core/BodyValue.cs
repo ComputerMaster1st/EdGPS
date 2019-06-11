@@ -29,23 +29,71 @@ namespace EdGps.Core
         private const int TerraformableWaterWorld = 116295 + WaterWorld;
         private const int TerraformableOther = 93328 + Other;
 
-        public static int GetBodyValue(BodyType type, double mass) {
+        public static int GetBodyValue(BodyType type, double mass, bool isTerraformable) {
+            int value;
             switch (type) {
                 // Stars
                 case BodyType.Star:
-                    var calc = Star + ((mass * Star) / StarFactor);
-                    return (int)Math.Round(calc);
+                    value = (int)Math.Round(Star + ((mass * Star) / StarFactor));
+                    break;
                 case BodyType.Black_Hole:
-                    return (int)Math.Round(BlackHole + ((mass * BlackHole) / StarFactor));
+                    value = (int)Math.Round(BlackHole + ((mass * BlackHole) / StarFactor));
+                    break;
                 case BodyType.Neutron_Star:
-                    return (int)Math.Round(NeutronStar + ((mass * NeutronStar) / StarFactor));
+                    value = (int)Math.Round(NeutronStar + ((mass * NeutronStar) / StarFactor));
+                    break;
                 case BodyType.White_Dwarf:
-                    return (int)Math.Round(WhiteDwarf + ((mass * WhiteDwarf) / StarFactor));
+                    value = (int)Math.Round(WhiteDwarf + ((mass * WhiteDwarf) / StarFactor));
+                    break;
+
                 // Worlds
-                // Other
+                case BodyType.AmmoniaWorld:
+                    value = (int)Math.Round(AmmoniaWorld + ((AmmoniaWorld * WorldFactor) * Math.Pow(mass, 0.2)));
+                    break;
+                case BodyType.EarthlikeWorld:
+                    value = (int)Math.Round(EarthlikeWorld + ((EarthlikeWorld * WorldFactor) * Math.Pow(mass, 0.2)));
+                    break;
+                case BodyType.GasGiant:
+                    value = (int)Math.Round(GasGiant + ((GasGiant * WorldFactor) * Math.Pow(mass, 0.2)));
+                    break;
+                case BodyType.GasGiant2:
+                    value = (int)Math.Round(GasGiantClass2 + ((GasGiantClass2 * WorldFactor) * Math.Pow(mass, 0.2)));
+                    break;
+                case BodyType.HighMetalContent:
+                    if (isTerraformable) {
+                        value = (int)Math.Round(TerraformableHighMetalContent + ((TerraformableHighMetalContent * WorldFactor) * Math.Pow(mass, 0.2)));
+                        break;
+                    }
+
+                    value = (int)Math.Round(HighMetalContent + ((HighMetalContent * WorldFactor) * Math.Pow(mass, 0.2)));
+                    break;
+                case BodyType.MetalRich:
+                    value = (int)Math.Round(MetalRich + ((MetalRich * WorldFactor) * Math.Pow(mass, 0.2)));
+                    break;
+                case BodyType.WaterWorld:
+                    if (isTerraformable) {
+                        value = (int)Math.Round(TerraformableWaterWorld + ((TerraformableWaterWorld * WorldFactor) * Math.Pow(mass, 0.2)));
+                        break;
+                    }
+
+                    value = (int)Math.Round(WaterWorld + ((WaterWorld * WorldFactor) * Math.Pow(mass, 0.2)));
+                    break;
+                case BodyType.Planet:
+                    if (isTerraformable) {
+                        value = (int)Math.Round(TerraformableOther + ((TerraformableOther * WorldFactor) * Math.Pow(mass, 0.2)));
+                        break;
+                    }
+
+                    value = (int)Math.Round(Other + ((Other * WorldFactor) * Math.Pow(mass, 0.2)));
+                    break;
+
+                // Other/Non-Bodies
                 default:
-                    return 0;
+                    value = 0;
+                    break;
             }
+
+            return Math.Max(500, value);
         }
     }
 }
