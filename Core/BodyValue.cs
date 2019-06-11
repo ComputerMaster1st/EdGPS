@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EdGps.Core.Models;
+using System;
 
 namespace EdGps.Core
 {
@@ -29,62 +30,62 @@ namespace EdGps.Core
         private const int TerraformableWaterWorld = 116295 + WaterWorld;
         private const int TerraformableOther = 93328 + Other;
 
-        public static int GetBodyValue(BodyType type, double mass, bool isTerraformable) {
+        public static int GetBodyValue(Body body) {
             int value;
-            switch (type) {
+            switch (body.Type) {
                 // Stars
                 case BodyType.Star:
-                    value = (int)Math.Round(Star + ((mass * Star) / StarFactor));
+                    value = (int)Math.Round(Star + ((body.Mass * Star) / StarFactor));
                     break;
                 case BodyType.Black_Hole:
-                    value = (int)Math.Round(BlackHole + ((mass * BlackHole) / StarFactor));
+                    value = (int)Math.Round(BlackHole + ((body.Mass * BlackHole) / StarFactor));
                     break;
                 case BodyType.Neutron_Star:
-                    value = (int)Math.Round(NeutronStar + ((mass * NeutronStar) / StarFactor));
+                    value = (int)Math.Round(NeutronStar + ((body.Mass * NeutronStar) / StarFactor));
                     break;
                 case BodyType.White_Dwarf:
-                    value = (int)Math.Round(WhiteDwarf + ((mass * WhiteDwarf) / StarFactor));
+                    value = (int)Math.Round(WhiteDwarf + ((body.Mass * WhiteDwarf) / StarFactor));
                     break;
 
                 // Worlds
                 case BodyType.AmmoniaWorld:
-                    value = (int)Math.Round(AmmoniaWorld + ((AmmoniaWorld * WorldFactor) * Math.Pow(mass, 0.2)));
+                    value = GetWorldValue(AmmoniaWorld, body);
                     break;
                 case BodyType.EarthlikeWorld:
-                    value = (int)Math.Round(EarthlikeWorld + ((EarthlikeWorld * WorldFactor) * Math.Pow(mass, 0.2)));
+                    value = GetWorldValue(EarthlikeWorld, body);
                     break;
                 case BodyType.GasGiant:
-                    value = (int)Math.Round(GasGiant + ((GasGiant * WorldFactor) * Math.Pow(mass, 0.2)));
+                    value = GetWorldValue(GasGiant, body);
                     break;
                 case BodyType.GasGiant2:
-                    value = (int)Math.Round(GasGiantClass2 + ((GasGiantClass2 * WorldFactor) * Math.Pow(mass, 0.2)));
+                    value = GetWorldValue(GasGiantClass2, body);
                     break;
                 case BodyType.HighMetalContent:
-                    if (isTerraformable) {
-                        value = (int)Math.Round(TerraformableHighMetalContent + ((TerraformableHighMetalContent * WorldFactor) * Math.Pow(mass, 0.2)));
+                    if (!string.IsNullOrWhiteSpace(body.Terraformable)) {
+                        value = GetWorldValue(TerraformableHighMetalContent, body);
                         break;
                     }
 
-                    value = (int)Math.Round(HighMetalContent + ((HighMetalContent * WorldFactor) * Math.Pow(mass, 0.2)));
+                    value = GetWorldValue(HighMetalContent, body);
                     break;
                 case BodyType.MetalRich:
-                    value = (int)Math.Round(MetalRich + ((MetalRich * WorldFactor) * Math.Pow(mass, 0.2)));
+                    value = GetWorldValue(MetalRich, body);
                     break;
                 case BodyType.WaterWorld:
-                    if (isTerraformable) {
-                        value = (int)Math.Round(TerraformableWaterWorld + ((TerraformableWaterWorld * WorldFactor) * Math.Pow(mass, 0.2)));
+                    if (!string.IsNullOrWhiteSpace(body.Terraformable)) {
+                        value = GetWorldValue(TerraformableWaterWorld, body);
                         break;
                     }
 
-                    value = (int)Math.Round(WaterWorld + ((WaterWorld * WorldFactor) * Math.Pow(mass, 0.2)));
+                    value = GetWorldValue(WaterWorld, body);
                     break;
                 case BodyType.Planet:
-                    if (isTerraformable) {
-                        value = (int)Math.Round(TerraformableOther + ((TerraformableOther * WorldFactor) * Math.Pow(mass, 0.2)));
+                    if (!string.IsNullOrWhiteSpace(body.Terraformable)) {
+                        value = GetWorldValue(TerraformableOther, body);
                         break;
                     }
 
-                    value = (int)Math.Round(Other + ((Other * WorldFactor) * Math.Pow(mass, 0.2)));
+                    value = GetWorldValue(Other, body);
                     break;
 
                 // Other/Non-Bodies
@@ -94,6 +95,24 @@ namespace EdGps.Core
             }
 
             return Math.Max(500, value);
+        }
+
+        private static int GetWorldValue(int baseValue, Body body) {
+            var mappingMultiplier = 1.0;
+            var isFirstDiscovered = !body.Discovered;
+            var isFirstMapped = !body.Mapped && body.IsDssScanned ? true : false;
+
+            if (body.Mapped) {
+                if (isFirstDiscovered && isFirstMapped) mappingMultiplier = 3.699622554;
+                else if (isFirstMapped) mappingMultiplier = 8.0956;
+                else mappingMultiplier = 3.3333333333;
+
+                mappingMultiplier *= (body.DssEfficiencyAchieved) ? 1.25 : 1;
+            }
+
+            var value = Math.Max(500, (baseValue + (baseValue * WorldFactor * Math.Pow(body.Mass, 0.2))) * mappingMultiplier);
+            value *= (isFirstDiscovered) ? 2.6 : 1;
+            return (int)Math.Round(value);
         }
     }
 }

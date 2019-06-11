@@ -14,8 +14,10 @@ namespace EdGps.Core.Models
         public double Distance { get; set; } = -1;
         public bool Discovered { get; set; }
         public bool Mapped { get; set; }
+        public bool FirstMapped { get; set; }
         public string Terraformable { get; set; } = string.Empty;
         public bool IsDssScanned { get; set; }
+        public bool DssEfficiencyAchieved { get; set; }
 
         public List<Body> SubBodies { get; set; } = new List<Body>();
 

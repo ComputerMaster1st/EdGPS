@@ -65,7 +65,7 @@ namespace EdGps
             var discovered = body.Discovered ? "" : AddBrackets("Discovered");
             var bodyName = body.Name.Replace(systemName, "");
             var distance = string.Format("{0:n0}", body.Distance);
-            var bodyValue = BodyValue.GetBodyValue(body.Type, body.Mass, !string.IsNullOrWhiteSpace(body.Terraformable));
+            var bodyValue = BodyValue.GetBodyValue(body);
             var bodyValueString = AddBrackets($"{string.Format("{0:n0}", bodyValue)} cr");
 
             switch (body.Type) {
