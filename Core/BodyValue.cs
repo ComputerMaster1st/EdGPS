@@ -30,74 +30,52 @@ namespace EdGps.Core
         private const int TerraformableWaterWorld = 116295 + WaterWorld;
         private const int TerraformableOther = 93328 + Other;
 
-        public static int GetBodyValue(Body body) {
-            int value;
+        public static (int Value, int HonkValue) GetBodyValue(Body body) {
             switch (body.Type) {
                 // Stars
                 case BodyType.Star:
-                    value = (int)Math.Round(Star + ((body.Mass * Star) / StarFactor));
-                    break;
+                    return GetStarValue(Star, body);
                 case BodyType.Black_Hole:
-                    value = (int)Math.Round(BlackHole + ((body.Mass * BlackHole) / StarFactor));
-                    break;
+                    return GetStarValue(BlackHole, body);
                 case BodyType.Neutron_Star:
-                    value = (int)Math.Round(NeutronStar + ((body.Mass * NeutronStar) / StarFactor));
-                    break;
+                    return GetStarValue(NeutronStar, body);
                 case BodyType.White_Dwarf:
-                    value = (int)Math.Round(WhiteDwarf + ((body.Mass * WhiteDwarf) / StarFactor));
-                    break;
+                    return GetStarValue(WhiteDwarf, body);
 
                 // Worlds
                 case BodyType.AmmoniaWorld:
-                    value = GetWorldValue(AmmoniaWorld, body);
-                    break;
+                    return GetWorldValue(AmmoniaWorld, body);
                 case BodyType.EarthlikeWorld:
-                    value = GetWorldValue(EarthlikeWorld, body);
-                    break;
+                    return GetWorldValue(EarthlikeWorld, body);
                 case BodyType.GasGiant:
-                    value = GetWorldValue(GasGiant, body);
-                    break;
+                    return GetWorldValue(GasGiant, body);
                 case BodyType.GasGiant2:
-                    value = GetWorldValue(GasGiantClass2, body);
-                    break;
+                    return GetWorldValue(GasGiantClass2, body);
                 case BodyType.HighMetalContent:
-                    if (!string.IsNullOrWhiteSpace(body.Terraformable)) {
-                        value = GetWorldValue(TerraformableHighMetalContent, body);
-                        break;
-                    }
-
-                    value = GetWorldValue(HighMetalContent, body);
-                    break;
+                    if (!string.IsNullOrWhiteSpace(body.Terraformable)) return GetWorldValue(TerraformableHighMetalContent, body);
+                    return GetWorldValue(HighMetalContent, body);
                 case BodyType.MetalRich:
-                    value = GetWorldValue(MetalRich, body);
-                    break;
+                    return GetWorldValue(MetalRich, body);
                 case BodyType.WaterWorld:
-                    if (!string.IsNullOrWhiteSpace(body.Terraformable)) {
-                        value = GetWorldValue(TerraformableWaterWorld, body);
-                        break;
-                    }
-
-                    value = GetWorldValue(WaterWorld, body);
-                    break;
+                    if (!string.IsNullOrWhiteSpace(body.Terraformable)) return GetWorldValue(TerraformableWaterWorld, body);
+                    return GetWorldValue(WaterWorld, body);
                 case BodyType.Planet:
-                    if (!string.IsNullOrWhiteSpace(body.Terraformable)) {
-                        value = GetWorldValue(TerraformableOther, body);
-                        break;
-                    }
-
-                    value = GetWorldValue(Other, body);
-                    break;
+                    if (!string.IsNullOrWhiteSpace(body.Terraformable)) return GetWorldValue(TerraformableOther, body);
+                    return GetWorldValue(Other, body);
 
                 // Other/Non-Bodies
                 default:
-                    value = 0;
-                    break;
+                    return (0, 0);
             }
-
-            return Math.Max(500, value);
         }
 
-        private static int GetWorldValue(int baseValue, Body body) {
+        private static (int Value, int HonkValue) GetStarValue(int baseValue, Body body) {
+            var value = (int)Math.Round(baseValue + (body.Mass * baseValue / StarFactor));
+            var honkValue = (int)Math.Round(baseValue / 3 * (body.Discovered ? 1 : 2.6));
+            return (value, honkValue);
+        }
+
+        private static (int Value, int HonkValue) GetWorldValue(int baseValue, Body body) {
             var mappingMultiplier = 1.0;
             var isFirstDiscovered = !body.Discovered;
             var isFirstMapped = !body.Mapped && body.IsDssScanned ? true : false;
@@ -111,8 +89,11 @@ namespace EdGps.Core
             }
 
             var value = Math.Max(500, (baseValue + (baseValue * WorldFactor * Math.Pow(body.Mass, 0.2))) * mappingMultiplier);
+            var honkValue = Math.Max(500, (baseValue + (baseValue * WorldFactor * Math.Pow(body.Mass, 0.2))) / 3);
             value *= (isFirstDiscovered) ? 2.6 : 1;
-            return (int)Math.Round(value);
+            honkValue *= (isFirstDiscovered) ? 2.6 : 1;
+
+            return ((int)Math.Round(value), (int)Math.Round(honkValue));
         }
     }
 }
