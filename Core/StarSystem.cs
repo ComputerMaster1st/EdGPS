@@ -48,11 +48,14 @@ namespace EdGps.Core
 
         private void MarkDssScanned(List<Body> bodies, DssScan scan) {
             var body = bodies.FirstOrDefault(f => f.Id == scan.BodyId);
-            
+
             if (body is null)
                 foreach (var subBody in bodies)
                     MarkDssScanned(subBody.SubBodies, scan);
-            else body.IsDssScanned = true;
+            else {
+                body.IsDssScanned = true;
+                body.DssEfficiencyAchieved = scan.ProbesUsed < scan.EfficiencyTarget ? true : false;
+            }
         }
 
         private void AddSubBody(List<Body> bodies, Body newBody, int step = 0) {
@@ -72,7 +75,7 @@ namespace EdGps.Core
                     parentBody.Name = newBody.Name;
                     parentBody.SubType = newBody.SubType;
                     parentBody.Type = newBody.Type;
-
+                    parentBody.Mass = newBody.Mass;
                     return;
                 } else return;
             }

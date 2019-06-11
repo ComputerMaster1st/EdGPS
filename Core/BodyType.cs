@@ -9,6 +9,13 @@ namespace EdGps.Core
         Black_Hole,
         Neutron_Star,
         White_Dwarf,
-        T_Tauri_Star
+        T_Tauri_Star,
+        MetalRich,
+        AmmoniaWorld,
+        GasGiant,
+        GasGiant2,
+        HighMetalContent,
+        WaterWorld,
+        EarthlikeWorld
     }
 }
