@@ -114,7 +114,7 @@ namespace EdGps.Core
                         var subType = (string)rawData["PlanetClass"];
                         body.Type = Parser.ParseWorldType(subType);
                         body.SubType = subType;
-                        body.Terraformable = (string)rawData["TerraformState"];
+                        body.Terraformable = rawData.ContainsKey("TerraformState") ? (string)rawData["TerraformState"] : string.Empty;
                         body.Mass = (double)rawData["MassEM"];
                     } else body.Type = BodyType.Belt;
 
