@@ -77,55 +77,37 @@ namespace EdGps
         }
 
         private void OnBodyScan(object sender, Body body) {
-            switch (body.SubType) {
-                // Star Class
-                case "H":
-                    body.Type = BodyType.Black_Hole;
-                    PlaySound(VoiceType.BlackHole);
-                    break;
-                case "N":
-                    body.Type = BodyType.Neutron_Star;
-                    PlaySound(VoiceType.NeutronStar);
-                    break;
-                case "DAZ":
-                    body.Type = BodyType.White_Dwarf;
-                    PlaySound(VoiceType.WhiteDwarf);
-                    break;
-                case "TTS":
-                    body.Type = BodyType.T_Tauri_Star;
-                    break;
-                // World Class
-                case string val when val.Contains("gas giant", StringComparison.CurrentCultureIgnoreCase):
-                    if (val.Contains("class II gas giant")) body.Type = BodyType.GasGiant2;
-                    else body.Type = BodyType.GasGiant;
-                    break;
-                case "Water world":
-                    PlaySound(VoiceType.Water);
-                    body.Type = BodyType.WaterWorld;
-                    break;
-                case "Earthlike body":
-                    PlaySound(VoiceType.Earth);
-                    body.Type = BodyType.EarthlikeWorld;
-                    break;
-                case "Ammonia world":
-                    PlaySound(VoiceType.Ammonia);
-                    body.Type = BodyType.AmmoniaWorld;
-                    break;
-                case "High metal content body":
-                    body.Type = BodyType.HighMetalContent;
-                    break;
-                case "Metal rich body":
-                    body.Type = BodyType.MetalRich;
-                    break;
-                default:
-                    break;
-            }
-
             _system.AddBody(body);
             _writer.Write(_system, _nextSystem);
             if (_system.IsComplete) return;
 
             if (!string.IsNullOrEmpty(body.Terraformable)) PlaySound(VoiceType.Terraformable);
+
+            switch (body.Type) {
+                // Star Class
+                case BodyType.Black_Hole:
+                    PlaySound(VoiceType.BlackHole);
+                    break;
+                case BodyType.Neutron_Star:
+                    PlaySound(VoiceType.NeutronStar);
+                    break;
+                case BodyType.White_Dwarf:
+                    PlaySound(VoiceType.WhiteDwarf);
+                    break;
+
+                // World Class
+                case BodyType.WaterWorld:
+                    PlaySound(VoiceType.Water);
+                    break;
+                case BodyType.EarthlikeWorld:
+                    PlaySound(VoiceType.Earth);
+                    break;
+                case BodyType.AmmoniaWorld:
+                    PlaySound(VoiceType.Ammonia);
+                    break;
+                default:
+                    break;
+            }
         }
 
         private void OnAllBodiesFound(object sender, bool isAllFound) {

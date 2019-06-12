@@ -106,12 +106,14 @@ namespace EdGps.Core
                     var body = Parser.ParseScanBody(rawData);
 
                     if (rawData.ContainsKey("StarType")) {
-                        body.Type = BodyType.Star;
-                        body.SubType = (string)rawData["StarType"];
+                        var subType = (string)rawData["StarType"];
+                        body.Type = Parser.ParseStarType(subType);
+                        body.SubType = subType;
                         body.Mass = (double)rawData["StellarMass"];
                     } else if (rawData.ContainsKey("PlanetClass")) {
-                        body.Type = BodyType.Planet;
-                        body.SubType = (string)rawData["PlanetClass"];
+                        var subType = (string)rawData["PlanetClass"];
+                        body.Type = Parser.ParseWorldType(subType);
+                        body.SubType = subType;
                         body.Terraformable = (string)rawData["TerraformState"];
                         body.Mass = (double)rawData["MassEM"];
                     } else body.Type = BodyType.Belt;
