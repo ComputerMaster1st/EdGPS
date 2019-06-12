@@ -129,9 +129,9 @@ namespace EdGps
         }
 
         private void OnAllBodiesFound(object sender, bool isAllFound) {
+            if (!_system.IsComplete) PlaySound(VoiceType.Identified);
             _system.IsComplete = isAllFound;
             _writer.Write(_system, _nextSystem);
-            PlaySound(VoiceType.Identified);
         }
 
         private void PlaySound(VoiceType response) {
