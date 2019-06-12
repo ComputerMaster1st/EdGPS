@@ -30,7 +30,7 @@ namespace EdGps.Core
         }
 
         public static BodyType ParseWorldType(string worldType) {
-            if (_worldTypes.ContainsKey(worldType)) return _starTypes[worldType];
+            if (_worldTypes.ContainsKey(worldType)) return _worldTypes[worldType];
             if (worldType.Contains("gas giant", StringComparison.CurrentCultureIgnoreCase))
                 if (worldType.Contains("class II gas giant")) return BodyType.GasGiant2;
                 else return BodyType.GasGiant;
