@@ -92,7 +92,7 @@ namespace EdGps.Core
 
         public static StarSystem Load(string systemName = null) {
             if (!string.IsNullOrWhiteSpace(systemName)) {
-                if (File.Exists($"{Directories.SystemDir}/{systemName}.json"))
+                if (File.Exists($"{Directories.SystemDir}/{systemName.Replace("*", "")}.json"))
                     return JsonConvert.DeserializeObject<StarSystem>(File.ReadAllText($"{Directories.SystemDir}/{systemName}.json"));
                 else return null;
             }
@@ -111,7 +111,7 @@ namespace EdGps.Core
 
         public void Save() {
             var json = JsonConvert.SerializeObject(this, Formatting.Indented);
-            File.WriteAllText($"{Directories.SystemDir}/{Name}.json", json);
+            File.WriteAllText($"{Directories.SystemDir}/{Name.Replace("*", "")}.json", json);
         }
     }
 }
