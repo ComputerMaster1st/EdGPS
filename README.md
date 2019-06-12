@@ -1,5 +1,8 @@
 # Greetings, Commanders!
 
+### Contact Me
+Discord : ComputerMaster1st#6458
+
 ## Summary
 Twitch Clip : [E:D GPS Demonstration](https://www.twitch.tv/videos/430282763)
 
