@@ -16,6 +16,7 @@ namespace EdGps.Core
         GasGiant2,
         HighMetalContent,
         WaterWorld,
-        EarthlikeWorld
+        EarthlikeWorld,
+        Herbig_AeBe
     }
 }

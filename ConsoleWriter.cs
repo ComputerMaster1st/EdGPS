@@ -146,6 +146,7 @@ namespace EdGps
                     confirmedBodies.Add(body, bodyValue);
                     break;
                 case BodyType.Black_Hole:
+                case BodyType.Herbig_AeBe:
                 case BodyType.Neutron_Star:
                 case BodyType.T_Tauri_Star:
                     output.AppendFormat("{0}{1}{2}{3}{4}",

@@ -8,11 +8,16 @@ namespace EdGps.Core
     public static class Parser
     {
         private static Dictionary<string, BodyType> _starTypes = new Dictionary<string, BodyType>() {
-            // Star Types
+            // Non-Sequence Stars
             { "H", BodyType.Black_Hole },
             { "N", BodyType.Neutron_Star },
+
+            // White Dwarfs
             { "DAZ", BodyType.White_Dwarf },
-            { "TTS", BodyType.T_Tauri_Star }
+
+            // Proto-Stars
+            { "TTS", BodyType.T_Tauri_Star },
+            { "AeBe", BodyType.Herbig_AeBe }
         };
 
         private static Dictionary<string, BodyType> _worldTypes = new Dictionary<string, BodyType>() {
