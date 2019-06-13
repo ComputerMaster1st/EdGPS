@@ -54,7 +54,7 @@ namespace EdGps.Core
                     MarkDssScanned(subBody.SubBodies, scan);
             else {
                 body.IsDssScanned = true;
-                body.DssEfficiencyAchieved = scan.ProbesUsed < scan.EfficiencyTarget ? true : false;
+                body.DssEfficiencyAchieved = scan.ProbesUsed <= scan.EfficiencyTarget ? true : false;
             }
         }
 
