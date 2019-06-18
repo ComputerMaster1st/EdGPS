@@ -48,11 +48,14 @@ namespace EdGps.Core
 
         private void MarkDssScanned(List<Body> bodies, DssScan scan) {
             var body = bodies.FirstOrDefault(f => f.Id == scan.BodyId);
-            
+
             if (body is null)
                 foreach (var subBody in bodies)
                     MarkDssScanned(subBody.SubBodies, scan);
-            else body.IsDssScanned = true;
+            else {
+                body.IsDssScanned = true;
+                body.DssEfficiencyAchieved = scan.ProbesUsed <= scan.EfficiencyTarget ? true : false;
+            }
         }
 
         private void AddSubBody(List<Body> bodies, Body newBody, int step = 0) {
@@ -72,7 +75,8 @@ namespace EdGps.Core
                     parentBody.Name = newBody.Name;
                     parentBody.SubType = newBody.SubType;
                     parentBody.Type = newBody.Type;
-
+                    parentBody.Mass = newBody.Mass;
+                    parentBody.Terraformable = newBody.Terraformable;
                     return;
                 } else return;
             }
@@ -88,7 +92,7 @@ namespace EdGps.Core
 
         public static StarSystem Load(string systemName = null) {
             if (!string.IsNullOrWhiteSpace(systemName)) {
-                if (File.Exists($"{Directories.SystemDir}/{systemName}.json"))
+                if (File.Exists($"{Directories.SystemDir}/{systemName.Replace("*", "")}.json"))
                     return JsonConvert.DeserializeObject<StarSystem>(File.ReadAllText($"{Directories.SystemDir}/{systemName}.json"));
                 else return null;
             }
@@ -107,7 +111,7 @@ namespace EdGps.Core
 
         public void Save() {
             var json = JsonConvert.SerializeObject(this, Formatting.Indented);
-            File.WriteAllText($"{Directories.SystemDir}/{Name}.json", json);
+            File.WriteAllText($"{Directories.SystemDir}/{Name.Replace("*", "")}.json", json);
         }
     }
 }

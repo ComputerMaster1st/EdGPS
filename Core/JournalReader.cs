@@ -15,6 +15,7 @@ namespace EdGps.Core
         private FileSystemWatcher watcher = new FileSystemWatcher();
         private Task _task = null;
         private ReaderStatus _status = ReaderStatus.Idle;
+        private bool _isReady = false;
 
         public event EventHandler<FsdJump> OnFsdJump;
         public event EventHandler<FssDiscoveryScan> OnFssDiscoveryScan;
@@ -23,6 +24,7 @@ namespace EdGps.Core
         public event EventHandler<bool> OnAllBodiesFound;
         public event EventHandler<StartJump> OnStartJump;
         public event EventHandler<bool> OnShutdown;
+        public event EventHandler<bool> OnReady;
 
         public JournalReader(string journalDirectory) {
             _directory = new DirectoryInfo(journalDirectory);
@@ -50,8 +52,22 @@ namespace EdGps.Core
         private FileInfo GetJournal()
             => _directory.GetFiles()
                 .Where(f => f.Extension == ".log")
-                .OrderByDescending(f => f.LastWriteTime)
+                .OrderByDescending(f => f.Name)
                 .First();
+
+        public void Build() {
+            var journalFiles = _directory.GetFiles()
+                .Where(f => f.Extension == ".log")
+                .OrderBy(f => f.Name);
+            Directory.CreateDirectory(Directories.SystemDir);
+
+            foreach (var journal in journalFiles) {
+                using FileStream fs = journal.Open(FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
+                using StreamReader sr = new StreamReader(fs);
+                while (!sr.EndOfStream)
+                    ReadEvent(Parser.ParseJson(sr.ReadLine()));
+            }
+        }
 
         private async Task RunAsync(FileInfo journalFile) {
             using (FileStream fs = journalFile.Open(FileMode.Open, FileAccess.Read, FileShare.ReadWrite)) 
@@ -59,7 +75,13 @@ namespace EdGps.Core
                 _status = ReaderStatus.Active;
                 while (!_cancelReader.IsCancellationRequested) {
                     while (!sr.EndOfStream) ReadEvent(Parser.ParseJson(sr.ReadLine()));
-                    while (sr.EndOfStream && !_cancelReader.IsCancellationRequested) await Task.Delay(1000);
+                    while (sr.EndOfStream && !_cancelReader.IsCancellationRequested) {
+                        if (!_isReady) {
+                            _isReady = true;
+                            OnReady?.Invoke(this, _isReady);
+                        }
+                        await Task.Delay(1000);
+                    }
                 }
             }
             _status = ReaderStatus.Stopped;
@@ -84,12 +106,16 @@ namespace EdGps.Core
                     var body = Parser.ParseScanBody(rawData);
 
                     if (rawData.ContainsKey("StarType")) {
-                        body.Type = BodyType.Star;
-                        body.SubType = rawData["StarType"].ToString();
+                        var subType = (string)rawData["StarType"];
+                        body.Type = Parser.ParseStarType(subType);
+                        body.SubType = subType;
+                        body.Mass = (double)rawData["StellarMass"];
                     } else if (rawData.ContainsKey("PlanetClass")) {
-                        body.Type = BodyType.Planet;
-                        body.SubType = rawData["PlanetClass"].ToString();
-                        body.Terraformable = rawData["TerraformState"].ToString();
+                        var subType = (string)rawData["PlanetClass"];
+                        body.Type = Parser.ParseWorldType(subType);
+                        body.SubType = subType;
+                        body.Terraformable = rawData.ContainsKey("TerraformState") ? (string)rawData["TerraformState"] : string.Empty;
+                        body.Mass = (double)rawData["MassEM"];
                     } else body.Type = BodyType.Belt;
 
                     OnBodyScan?.Invoke(this, body);
