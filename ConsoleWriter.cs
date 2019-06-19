@@ -136,9 +136,10 @@ namespace EdGps
                     confirmedBodies.Add(body, bodyValue);
                     break;
                 case BodyType.White_Dwarf:
+                case BodyType.Wolf_Rayet:
                     output.AppendFormat("{0}{1}{2}{3}{4}",
                         body.Name,
-                        AddBrackets($"White Dwarf ({body.SubType})"),
+                        AddBrackets($"{body.Type.ToString().Replace('_', ' ')} ({body.SubType})"),
                         AddBrackets($"{distance} ls"),
                         bodyValueString,
                         discovered
@@ -149,6 +150,7 @@ namespace EdGps
                 case BodyType.Herbig_AeBe:
                 case BodyType.Neutron_Star:
                 case BodyType.T_Tauri_Star:
+                case BodyType.Red_Giant:
                     output.AppendFormat("{0}{1}{2}{3}{4}",
                         body.Name,
                         AddBrackets(body.Type.ToString().Replace('_', ' ')),

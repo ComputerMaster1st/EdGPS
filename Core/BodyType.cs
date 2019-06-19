@@ -17,6 +17,8 @@ namespace EdGps.Core
         HighMetalContent,
         WaterWorld,
         EarthlikeWorld,
-        Herbig_AeBe
+        Herbig_AeBe,
+        Wolf_Rayet,
+        Red_Giant
     }
 }
