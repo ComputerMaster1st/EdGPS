@@ -9,7 +9,7 @@ namespace EdGps.Core
         Black_Hole,
         Neutron_Star,
         White_Dwarf,
-        T_Tauri_Star,
+        Proto_Star,
         MetalRich,
         AmmoniaWorld,
         GasGiant,
@@ -17,6 +17,7 @@ namespace EdGps.Core
         HighMetalContent,
         WaterWorld,
         EarthlikeWorld,
-        Herbig_AeBe
+        Wolf_Rayet,
+        Giant
     }
 }

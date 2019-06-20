@@ -13,11 +13,22 @@ namespace EdGps.Core
             { "N", BodyType.Neutron_Star },
 
             // White Dwarfs
+            { "DA", BodyType.White_Dwarf },
+            { "DAB", BodyType.White_Dwarf },
+            { "DAV", BodyType.White_Dwarf },
             { "DAZ", BodyType.White_Dwarf },
+            { "DC", BodyType.White_Dwarf },
+
+            // Wolf-Rayet
+            { "WO", BodyType.Wolf_Rayet },
+            { "WN", BodyType.Wolf_Rayet },
 
             // Proto-Stars
-            { "TTS", BodyType.T_Tauri_Star },
-            { "AeBe", BodyType.Herbig_AeBe }
+            { "TTS", BodyType.Proto_Star },
+            { "AeBe", BodyType.Proto_Star },
+
+            // Giants
+            { "M_RedGiant", BodyType.Giant }
         };
 
         private static Dictionary<string, BodyType> _worldTypes = new Dictionary<string, BodyType>() {
