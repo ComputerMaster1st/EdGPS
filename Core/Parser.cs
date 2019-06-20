@@ -28,7 +28,7 @@ namespace EdGps.Core
             { "AeBe", BodyType.Proto_Star },
 
             // Giants
-            { "M_RedGiant", BodyType.Red_Giant }
+            { "M_RedGiant", BodyType.Giant }
         };
 
         private static Dictionary<string, BodyType> _worldTypes = new Dictionary<string, BodyType>() {

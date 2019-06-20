@@ -97,7 +97,6 @@ namespace EdGps
             var bodyValueString = AddBrackets($"{string.Format("{0:n0}", bodyValue.Value)} cr");
 
             switch (body.Type) {
-                
                 case BodyType.Belt:
                     output.AppendFormat("{0}{1}{2}",
                         bodyName,
@@ -138,6 +137,7 @@ namespace EdGps
                 case BodyType.White_Dwarf:
                 case BodyType.Wolf_Rayet:
                 case BodyType.Proto_Star:
+                case BodyType.Giant:
                     output.AppendFormat("{0}{1}{2}{3}{4}",
                         body.Name,
                         AddBrackets($"{body.Type.ToString().Replace('_', ' ')} ({body.SubType})"),
@@ -149,7 +149,6 @@ namespace EdGps
                     break;
                 case BodyType.Black_Hole:
                 case BodyType.Neutron_Star:
-                case BodyType.Red_Giant:
                     output.AppendFormat("{0}{1}{2}{3}{4}",
                         body.Name,
                         AddBrackets(body.Type.ToString().Replace('_', ' ')),
