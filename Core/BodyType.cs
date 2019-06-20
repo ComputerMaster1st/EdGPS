@@ -18,6 +18,7 @@ namespace EdGps.Core
         WaterWorld,
         EarthlikeWorld,
         Wolf_Rayet,
-        Giant
+        Giant,
+        Super_Giant
     }
 }
