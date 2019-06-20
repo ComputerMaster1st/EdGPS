@@ -27,17 +27,16 @@ namespace EdGps
                 
             }
 
-            WaveStream mainOutputStream = new Mp3FileReader(Path.GetFullPath(localFilePath)); //Loading file to WaveStream
-            WaveChannel32 volumeStream = new WaveChannel32(mainOutputStream); //Creating WaveChannel with default settings, set volume later
-            WaveOutEvent waveOut = new WaveOutEvent //NOTE: using WaveOutEvent and NOT WaveOut - WaveOut isn't compatible with console apps
+            using (var mainOutputStream = new Mp3FileReader(Path.GetFullPath(localFilePath)))
+            using (var volumeStream = new WaveChannel32(mainOutputStream))
+            using (var waveOut = new WaveOutEvent { DeviceNumber = -1, Volume = 1.0f })
             {
-                DeviceNumber = -1, //Device -1 is the system default device
-                Volume = 1.0f //Volume could be set through config.json
-            };
-            waveOut.Init(volumeStream);
-            waveOut.Play();
+                waveOut.Init(volumeStream);
+                waveOut.Play();
 
-            await Task.Delay(_mp3Times[response]);
+                await Task.Delay(_mp3Times[response]);
+            }
+
             _lock.Release();
         }
     }
