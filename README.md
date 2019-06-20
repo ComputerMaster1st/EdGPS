@@ -6,9 +6,9 @@ Discord : ComputerMaster1st#6458
 ## Summary
 Twitch Clip : [E:D GPS Demonstration](https://www.twitch.tv/videos/430282763)
 
-Upcoming Update : [More Star Types & Improved Voice Player](https://github.com/ComputerMaster1st/EdGPS/wiki/Upcoming!)
+Upcoming Update : [Nothing yet...](https://github.com/ComputerMaster1st/EdGPS/wiki/Upcoming!)
 
-Latest Update : [June 11th '19 - System & Body Values](https://github.com/ComputerMaster1st/EdGPS/wiki/June-11th-'19)
+Latest Update : [June 20th '19 - More Star Types & Improved Voice Player](https://github.com/ComputerMaster1st/EdGPS/wiki/June-20th-'19)
 
 Recent Updates : [Updates - Index](https://github.com/ComputerMaster1st/EdGPS/wiki)
 
@@ -62,7 +62,7 @@ There are various "tags" which are shown, depending on various conditions.
 You'll also find there'll `(x)` where the body name should be. This is to indicate that it's either not discovered yet, or is a ring/barycenter. It's not that important basically. The tree in which the bodies are displayed in are ordered the same way as the system map (*although questionable due to how the logs are written*).
 
 ## Download
-Windows : [x86](https://www.dropbox.com/s/xrwtf94y4f71njx/EdGPS-x86.zip?dl=0) | [x64](https://www.dropbox.com/s/cumn62aeyiewyjj/EdGPS-x64.zip?dl=0) (Last Compiled @ 13th June 5:11PM UTC 0)
+Windows : [x86](https://www.dropbox.com/s/xrwtf94y4f71njx/EdGPS-x86.zip?dl=0) | [x64](https://www.dropbox.com/s/cumn62aeyiewyjj/EdGPS-x64.zip?dl=0) (Last Compiled @ 20th June 12:20PM UTC 0)
 
 ### Compile From Source
 If you wish to download & compile from source, please be sure to have the [.NETCore 3.0 SDK](https://dotnet.microsoft.com/download) installed and have knowledge on using it.
