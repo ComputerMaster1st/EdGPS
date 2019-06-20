@@ -29,7 +29,7 @@ namespace EdGps
 
             using (var mainOutputStream = new Mp3FileReader(Path.GetFullPath(localFilePath)))
             using (var volumeStream = new WaveChannel32(mainOutputStream))
-            using (var waveOut = new WaveOutEvent { DeviceNumber = -1, Volume = 1.0f })
+            using (var waveOut = new WaveOutEvent { DeviceNumber = -1, Volume = 0.5f })
             {
                 waveOut.Init(volumeStream);
                 waveOut.Play();
