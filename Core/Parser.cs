@@ -18,6 +18,7 @@ namespace EdGps.Core
             { "DAV", BodyType.White_Dwarf },
             { "DAZ", BodyType.White_Dwarf },
             { "DC", BodyType.White_Dwarf },
+            { "DCV", BodyType.White_Dwarf },
 
             // Wolf-Rayet
             { "WO", BodyType.Wolf_Rayet },
