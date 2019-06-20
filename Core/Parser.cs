@@ -24,8 +24,8 @@ namespace EdGps.Core
             { "WN", BodyType.Wolf_Rayet },
 
             // Proto-Stars
-            { "TTS", BodyType.T_Tauri_Star },
-            { "AeBe", BodyType.Herbig_AeBe },
+            { "TTS", BodyType.Proto_Star },
+            { "AeBe", BodyType.Proto_Star },
 
             // Giants
             { "M_RedGiant", BodyType.Red_Giant }
