@@ -32,7 +32,8 @@ namespace EdGps.Core
             { "M_RedGiant", BodyType.Giant },
 
             // Super Giants
-            { "A_BlueWhiteSuperGiant", BodyType.Super_Giant }
+            { "A_BlueWhiteSuperGiant", BodyType.Super_Giant },
+            { "F_WhiteSuperGiant", BodyType.Super_Giant }
         };
 
         private static Dictionary<string, BodyType> _worldTypes = new Dictionary<string, BodyType>() {
