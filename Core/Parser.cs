@@ -32,6 +32,7 @@ namespace EdGps.Core
             { "M_RedGiant", BodyType.Giant },
 
             // Super Giants
+            { "B_BlueWhiteSuperGiant", BodyType.Super_Giant },
             { "A_BlueWhiteSuperGiant", BodyType.Super_Giant },
             { "F_WhiteSuperGiant", BodyType.Super_Giant },
             { "G_WhiteSuperGiant", BodyType.Super_Giant }
