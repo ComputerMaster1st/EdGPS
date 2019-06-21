@@ -17,12 +17,17 @@ namespace EdGps.Core
             { "DAB", BodyType.White_Dwarf },
             { "DAV", BodyType.White_Dwarf },
             { "DAZ", BodyType.White_Dwarf },
+            { "DB", BodyType.White_Dwarf },
+            { "DBV", BodyType.White_Dwarf },
             { "DC", BodyType.White_Dwarf },
             { "DCV", BodyType.White_Dwarf },
 
             // Wolf-Rayet
-            { "WO", BodyType.Wolf_Rayet },
+            { "W", BodyType.Wolf_Rayet },
+            { "WC", BodyType.Wolf_Rayet },
             { "WN", BodyType.Wolf_Rayet },
+            { "WNC", BodyType.Wolf_Rayet },
+            { "WO", BodyType.Wolf_Rayet },
 
             // Proto-Stars
             { "TTS", BodyType.Proto_Star },
