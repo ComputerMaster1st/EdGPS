@@ -6,7 +6,7 @@ Discord : ComputerMaster1st#6458
 ## Summary
 Twitch Clip : [E:D GPS Demonstration](https://www.twitch.tv/videos/430282763)
 
-Upcoming Update : [Nothing yet...](https://github.com/ComputerMaster1st/EdGPS/wiki/Upcoming!)
+Upcoming Update : [More Star Types!](https://github.com/ComputerMaster1st/EdGPS/wiki/Upcoming!)
 
 Latest Update : [June 20th '19 - More Star Types & Improved Voice Player](https://github.com/ComputerMaster1st/EdGPS/wiki/June-20th-'19)
 
