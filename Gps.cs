@@ -15,11 +15,13 @@ namespace EdGps
         private string _nextSystem = null;
         private bool _isReady = false;
         private bool _voiceEnabled;
+        private int _soundVolume;
 
         public Gps(Config config) {
             _reader = new JournalReader(config.JournalPath);
             _writer = new ConsoleWriter();
             _voiceEnabled = config.VoiceEnabled;
+            _soundVolume = config.SoundVolume;
         }
 
         public void Start(bool build = false) {
@@ -120,7 +122,7 @@ namespace EdGps
         private void PlaySound(VoiceType response) {
             if (!_voiceEnabled) return;
             if (!_isReady) return;
-            _ = Task.Run(async () => await _voice.Play(response));
+            _ = Task.Run(async () => await _voice.Play(response, volume));
         }
     }
 }
