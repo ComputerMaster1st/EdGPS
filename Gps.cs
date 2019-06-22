@@ -122,7 +122,7 @@ namespace EdGps
         private void PlaySound(VoiceType response) {
             if (!_voiceEnabled) return;
             if (!_isReady) return;
-            _ = Task.Run(async () => await _voice.Play(response, volume));
+            _ = Task.Run(async () => await _voice.Play(response, _soundVolume));
         }
     }
 }
