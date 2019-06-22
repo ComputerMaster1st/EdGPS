@@ -15,13 +15,15 @@ namespace EdGps
         private string _nextSystem = null;
         private bool _isReady = false;
         private bool _voiceEnabled;
+        private int _soundVolume;
 
         public Gps(Config config) {
             _reader = new JournalReader(config.JournalPath);
             _writer = new ConsoleWriter();
             _voiceEnabled = config.VoiceEnabled;
+            _soundVolume = config.SoundVolume;
         }
-
+        
         public void Start(bool build = false) {
             _reader.OnAllBodiesFound += OnAllBodiesFound;
             _reader.OnBodyScan += OnBodyScan;
@@ -44,14 +46,14 @@ namespace EdGps
             _system.Save();
             _nextSystem = target.SystemName;
             _writer.Write(_system, _nextSystem);
-            PlaySound(VoiceType.Jumping);
+            PlaySound(VoiceType.Jumping, _soundVolume);
         }
 
         private void OnShutdown(object sender, bool e) => _system.Save();
         
         private void OnReady(object sender, bool e) {
             _isReady = true;
-            PlaySound(VoiceType.Standby);
+            PlaySound(VoiceType.Standby, _soundVolume);
         }
 
         private void OnSystemHonk(object sender, FssDiscoveryScan scan) {
@@ -59,7 +61,7 @@ namespace EdGps
             _system.TotalNonBodies = scan.NonBodyCount;
             _system.IsHonked = true;
             _writer.Write(_system, _nextSystem);
-            if (!_system.IsComplete) PlaySound(VoiceType.Unidentified);
+            if (!_system.IsComplete) PlaySound(VoiceType.Unidentified, _soundVolume);
         }
 
         private void OnEnteringNewSystem(object sender, FsdJump system) {
@@ -67,13 +69,13 @@ namespace EdGps
             Console.Title = $"Elite: Dangerous | Galactic Positioning System | {_system.Name}";
             _nextSystem = null;
             _writer.Write(_system, _nextSystem);
-            PlaySound(VoiceType.Dropping);
+            PlaySound(VoiceType.Dropping, _soundVolume);
         }
 
         private void OnSurfaceScan(object sender, DssScan scan) {
             _system.DssScanned(scan);
             _writer.Write(_system, _nextSystem);
-            PlaySound(VoiceType.Dss);
+            PlaySound(VoiceType.Dss, _soundVolume);
         }
 
         private void OnBodyScan(object sender, Body body) {
@@ -82,29 +84,29 @@ namespace EdGps
             _writer.Write(_system, _nextSystem);
             if (_system.IsComplete) return;
 
-            if (!string.IsNullOrEmpty(body.Terraformable)) PlaySound(VoiceType.Terraformable);
+            if (!string.IsNullOrEmpty(body.Terraformable)) PlaySound(VoiceType.Terraformable, _soundVolume);
 
             switch (body.Type) {
                 // Star Class
                 case BodyType.Black_Hole:
-                    PlaySound(VoiceType.BlackHole);
+                    PlaySound(VoiceType.BlackHole, _soundVolume);
                     break;
                 case BodyType.Neutron_Star:
-                    PlaySound(VoiceType.NeutronStar);
+                    PlaySound(VoiceType.NeutronStar, _soundVolume);
                     break;
                 case BodyType.White_Dwarf:
-                    PlaySound(VoiceType.WhiteDwarf);
+                    PlaySound(VoiceType.WhiteDwarf, _soundVolume);
                     break;
 
                 // World Class
                 case BodyType.WaterWorld:
-                    PlaySound(VoiceType.Water);
+                    PlaySound(VoiceType.Water, _soundVolume);
                     break;
                 case BodyType.EarthlikeWorld:
-                    PlaySound(VoiceType.Earth);
+                    PlaySound(VoiceType.Earth, _soundVolume);
                     break;
                 case BodyType.AmmoniaWorld:
-                    PlaySound(VoiceType.Ammonia);
+                    PlaySound(VoiceType.Ammonia, _soundVolume);
                     break;
                 default:
                     break;
@@ -112,15 +114,15 @@ namespace EdGps
         }
 
         private void OnAllBodiesFound(object sender, bool isAllFound) {
-            if (!_system.IsComplete) PlaySound(VoiceType.Identified);
+            if (!_system.IsComplete) PlaySound(VoiceType.Identified, _soundVolume);
             _system.IsComplete = isAllFound;
             _writer.Write(_system, _nextSystem);
         }
 
-        private void PlaySound(VoiceType response) {
+        private void PlaySound(VoiceType response, int volume = 50) {
             if (!_voiceEnabled) return;
             if (!_isReady) return;
-            _ = Task.Run(async () => await _voice.Play(response));
+            _ = Task.Run(async () => await _voice.Play(response, volume));
         }
     }
 }
