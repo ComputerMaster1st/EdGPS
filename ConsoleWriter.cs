@@ -64,7 +64,7 @@ namespace EdGps
                     system.Longitude,
                     system.Elevation).AppendLine()
                 .AppendFormat("Distance (Ly)   : {0} (Sol)",
-                    string.Format("{0:n0}", Math.Round(Math.Pow(Math.Pow(system.Longitude, 2) + Math.Pow(system.Latitude, 2) + Math.Pow(system.Elevation, 2), 0.5), 2))).AppendLine()
+                    string.Format("{0:n2}", Math.Round(Math.Pow(Math.Pow(system.Longitude, 2) + Math.Pow(system.Latitude, 2) + Math.Pow(system.Elevation, 2), 0.5), 2))).AppendLine()
                 .AppendFormat("System Scan     : {0}% Complete{1}{2}",
                     Math.Round(percentage, 0),
                     system.IsHonked ? "" : AddBrackets("Awaiting FSS Discovery Scan"),
