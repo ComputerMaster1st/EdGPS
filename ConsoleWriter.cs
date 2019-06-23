@@ -102,7 +102,6 @@ namespace EdGps
                         AddBrackets($"{distance} ls"),
                         discovered
                     ).AppendLine();
-                    confirmedBodies.Add(body, (0, 0));
                     break;
                 case BodyType.Planet:
                 case BodyType.AmmoniaWorld:
