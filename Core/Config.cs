@@ -11,6 +11,7 @@ namespace EdGps.Core
 
         public string JournalPath { get; private set; } = string.Empty;
         public bool VoiceEnabled { get; private set; } = true;
+        public int SoundVolume { get; private set; } = 50;
 
         [JsonConstructor]
         private Config(string journalPath, bool enableVoice) {
@@ -35,6 +36,12 @@ namespace EdGps.Core
 
         public void EnableVoice(bool enable = true) {
             VoiceEnabled = enable;
+            Save();
+        }
+
+        public void SetVolume(int vol = 50)
+        {
+            SoundVolume = vol;
             Save();
         }
     }

@@ -9,13 +9,13 @@ namespace EdGps
     public class Program
     {
         private Gps _gps = null;
+        private static bool firstTry = true;
 
         public static void Main() {
             Console.Title = "Elite: Dangerous | Galactic Positioning System";
             if (!Directory.Exists(Directories.SystemDir)) Directory.CreateDirectory(Directories.SystemDir);
 
             //Check if user has already set a path
-            // NOTE: This should be changed to some common config file, like a config.INI or something for future use
             var config = Config.LoadOrCreate();
             var exittext = "\nPress any key to exit...";
             string directoryPath;
@@ -23,15 +23,26 @@ namespace EdGps
             try {
                 if (!string.IsNullOrEmpty(config.JournalPath)) directoryPath = config.JournalPath;
                 else {
-                    Console.WriteLine("\n\nE:D Journal Log Directory (e.g. C:\\Users\\<username>\\Saved Games\\Frontier Developments\\Elite Dangerous) :\n");
-                    directoryPath = Parser.SanitizeDirectory(Console.ReadLine());
+                    string os = System.Runtime.InteropServices.RuntimeInformation.OSDescription.ToString().ToLower();
 
-                    if (directoryPath.Length <= 4) {
-                        Console.WriteLine("Please specify the directory where E:D Journal logs are kept.");
-                        Console.WriteLine(exittext);
-                        Console.ReadKey();
-                        return;
-                    }
+                    if (os.Contains("windows") && firstTry){
+                        string username = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
+                        username = username.Substring(username.LastIndexOf("\\"));
+                        username = username.Replace("\\", "");
+                        directoryPath = "C:\\Users\\" + username + "\\Saved Games\\Frontier Developments\\Elite Dangerous";
+                    }else{
+                        Console.WriteLine("E:D Journal Log Directory couldn't be determined automatically, please enter it manually");
+                        Console.WriteLine("(e.g. C:\\Users\\<username>\\Saved Games\\Frontier Developments\\Elite Dangerous):\n");
+                        directoryPath = Parser.SanitizeDirectory(Console.ReadLine());
+
+                        if (directoryPath.Length <= 4)
+                        {
+                            Console.WriteLine("Please specify the directory where E:D Journal logs are kept.");
+                            Console.WriteLine(exittext);
+                            Console.ReadKey();
+                            return;
+                        }
+                    }  
                 }
             } catch (Exception e) {
                 Console.WriteLine("Error: " + e);
@@ -42,7 +53,7 @@ namespace EdGps
 
             //Some user error handling
             try {
-                if (!(Directory.Exists(directoryPath)))  throw new Exception("\nError: Directory does not exist.\n");
+                if (!Directory.Exists(directoryPath)) throw new Exception("\nError: Directory does not exist.\n");
                 if (Directory.GetFiles(directoryPath).Length <= 0) throw new Exception("\nError: Directory has no files.\n");
 
                 var islogfile = false;
@@ -51,8 +62,10 @@ namespace EdGps
 
                 if (!islogfile) throw new Exception("\nError: Directory has no *.log files.\n");
             } catch (Exception e) {
+                firstTry = false;
                 Console.WriteLine("Error: " + e);
                 Console.WriteLine("\nPlease retry...");
+                Console.Clear();
                 Main();
             }
 

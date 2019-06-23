@@ -13,7 +13,7 @@ namespace EdGps
         private readonly SemaphoreSlim _lock = new SemaphoreSlim(1);
         private readonly Dictionary<VoiceType, TimeSpan> _mp3Times = new Dictionary<VoiceType, TimeSpan>();
 
-        public async Task Play(VoiceType response) {
+        public async Task Play(VoiceType response, int volume) {
             await _lock.WaitAsync();
 
             var localFilePath = Path.Combine(Directories.VoiceDir, $"{response.ToString()}.mp3");
@@ -29,7 +29,7 @@ namespace EdGps
 
             using (var mainOutputStream = new Mp3FileReader(Path.GetFullPath(localFilePath)))
             using (var volumeStream = new WaveChannel32(mainOutputStream))
-            using (var waveOut = new WaveOutEvent { DeviceNumber = -1, Volume = 0.5f })
+            using (var waveOut = new WaveOutEvent { DeviceNumber = -1, Volume = (float)volume / 100 })
             {
                 waveOut.Init(volumeStream);
                 waveOut.Play();
