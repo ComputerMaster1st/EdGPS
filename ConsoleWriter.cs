@@ -48,9 +48,8 @@ namespace EdGps
             double percentage =  0.00;
             var totalValueString = string.Format("{0:n0}", totalValue);
             var totalHonkValueString = string.Format("{0:n0}", totalHonkValue);
-            var totalBodies = system.TotalBodies + system.TotalNonBodies;
-            if (totalBodies > 0) {
-                var division = found / (double)totalBodies;
+            if (system.TotalBodies > 0) {
+                var division = found / (double)system.TotalBodies;
                 percentage = division * 100.00;
             }
 
