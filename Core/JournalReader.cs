@@ -62,10 +62,10 @@ namespace EdGps.Core
             Directory.CreateDirectory(Directories.SystemDir);
 
             foreach (var journal in journalFiles) {
-                using FileStream fs = journal.Open(FileMode.Open, FileAccess.Read, FileShare.ReadWrite);
-                using StreamReader sr = new StreamReader(fs);
-                while (!sr.EndOfStream)
-                    ReadEvent(Parser.ParseJson(sr.ReadLine()));
+                using (FileStream fs = journal.Open(FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+                using (StreamReader sr = new StreamReader(fs))
+                    while (!sr.EndOfStream)
+                        ReadEvent(Parser.ParseJson(sr.ReadLine()));
             }
         }
 
