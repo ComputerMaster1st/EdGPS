@@ -35,6 +35,7 @@ namespace EdGps.Core
             { "AeBe", BodyType.Proto_Star },
 
             // Giants
+            { "K_OrangeGiant", BodyType.Giant },
             { "M_RedGiant", BodyType.Giant },
 
             // Super Giants
