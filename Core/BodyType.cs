@@ -19,6 +19,7 @@ namespace EdGps.Core
         EarthlikeWorld,
         Wolf_Rayet,
         Giant,
-        Super_Giant
+        Super_Giant,
+        Carbon_Star
     }
 }

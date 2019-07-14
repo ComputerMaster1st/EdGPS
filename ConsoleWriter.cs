@@ -137,6 +137,7 @@ namespace EdGps
                 case BodyType.Proto_Star:
                 case BodyType.Giant:
                 case BodyType.Super_Giant:
+                case BodyType.Carbon_Star:
                     output.AppendFormat("{0}{1}{2}{3}{4}",
                         body.Name,
                         AddBrackets($"{body.Type.ToString().Replace('_', ' ')} ({body.SubType})"),

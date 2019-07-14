@@ -38,6 +38,7 @@ namespace EdGps.Core
                 case BodyType.Wolf_Rayet:
                 case BodyType.Giant:
                 case BodyType.Super_Giant:
+                case BodyType.Carbon_Star:
                     return GetStarValue(Star, body);
                 case BodyType.Black_Hole:
                     return GetStarValue(BlackHole, body);

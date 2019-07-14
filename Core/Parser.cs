@@ -34,6 +34,9 @@ namespace EdGps.Core
             { "TTS", BodyType.Proto_Star },
             { "AeBe", BodyType.Proto_Star },
 
+            // Carbon Stars
+            { "C", BodyType.Carbon_Star },
+
             // Giants
             { "K_OrangeGiant", BodyType.Giant },
             { "M_RedGiant", BodyType.Giant },
