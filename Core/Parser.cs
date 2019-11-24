@@ -13,41 +13,9 @@ namespace EdGps.Core
             { "SupermassiveBlackHole", BodyType.Black_Hole },
             { "N", BodyType.Neutron_Star },
 
-            // White Dwarfs
-            { "DA", BodyType.White_Dwarf },
-            { "DAB", BodyType.White_Dwarf },
-            { "DAV", BodyType.White_Dwarf },
-            { "DAZ", BodyType.White_Dwarf },
-            { "DB", BodyType.White_Dwarf },
-            { "DBV", BodyType.White_Dwarf },
-            { "DC", BodyType.White_Dwarf },
-            { "DCV", BodyType.White_Dwarf },
-            { "DQ", BodyType.White_Dwarf },
-
-            // Wolf-Rayet
-            { "W", BodyType.Wolf_Rayet },
-            { "WC", BodyType.Wolf_Rayet },
-            { "WN", BodyType.Wolf_Rayet },
-            { "WNC", BodyType.Wolf_Rayet },
-            { "WO", BodyType.Wolf_Rayet },
-
             // Proto-Stars
             { "TTS", BodyType.Proto_Star },
             { "AeBe", BodyType.Proto_Star },
-
-            // Carbon Stars
-            { "C", BodyType.Carbon_Star },
-
-            // Giants
-            { "K_OrangeGiant", BodyType.Giant },
-            { "M_RedGiant", BodyType.Giant },
-
-            // Super Giants
-            { "B_BlueWhiteSuperGiant", BodyType.Super_Giant },
-            { "A_BlueWhiteSuperGiant", BodyType.Super_Giant },
-            { "F_WhiteSuperGiant", BodyType.Super_Giant },
-            { "G_WhiteSuperGiant", BodyType.Super_Giant },
-            { "M_RedSuperGiant", BodyType.Super_Giant }
         };
 
         private static Dictionary<string, BodyType> _worldTypes = new Dictionary<string, BodyType>() {
@@ -60,6 +28,12 @@ namespace EdGps.Core
         };
 
         public static BodyType ParseStarType(string starType) {
+            if (starType.StartsWith("D")) return BodyType.White_Dwarf;
+            else if (starType.StartsWith("W")) return BodyType.Wolf_Rayet;
+            else if (starType.StartsWith("C")) return BodyType.Carbon_Star;
+            else if (starType.Contains("SuperGiant")) return BodyType.Super_Giant;
+            else if (starType.Contains("Giant")) return BodyType.Giant;
+
             if (_starTypes.ContainsKey(starType)) return _starTypes[starType];
             return BodyType.Star;
         }
