@@ -8,7 +8,7 @@ Twitch Clip : [E:D GPS Demonstration](https://www.twitch.tv/videos/430282763)
 
 Upcoming Update : [Nothing yet...](https://github.com/ComputerMaster1st/EdGPS/wiki/Upcoming!)
 
-Latest Update : * [July 2nd '19 - More Star Types & Application Changes](https://github.com/ComputerMaster1st/EdGPS/wiki/July-2nd-'19)
+Latest Update : * [November 24th '19 - Bugfixes](https://github.com/ComputerMaster1st/EdGPS/wiki/November-24th-'19)
 
 Recent Updates : [Updates - Index](https://github.com/ComputerMaster1st/EdGPS/wiki)
 
@@ -62,7 +62,9 @@ There are various "tags" which are shown, depending on various conditions.
 You'll also find there'll `(x)` where the body name should be. This is to indicate that it's either not discovered yet, or is a ring/barycenter. It's not that important basically. The tree in which the bodies are displayed in are ordered the same way as the system map (*although questionable due to how the logs are written*).
 
 ## Download
-Windows : [x86](https://www.dropbox.com/s/xrwtf94y4f71njx/EdGPS-x86.zip?dl=0) | [x64](https://www.dropbox.com/s/cumn62aeyiewyjj/EdGPS-x64.zip?dl=0) (Last Compiled @ 2nd July 7:10PM UTC 0)
+Windows : [x86](https://www.dropbox.com/s/xrwtf94y4f71njx/EdGPS-x86.zip?dl=0) | [x64](https://www.dropbox.com/s/cumn62aeyiewyjj/EdGPS-x64.zip?dl=0) (Last Compiled @ 24th Novembery 11:14PM UTC 0)
+
+If you're updating your current version, please remove or clear the systems directory to allow for rebuild as the new update will break if not done.
 
 ### Compile From Source
 If you wish to download & compile from source, please be sure to have the [.NETCore 3.0 SDK](https://dotnet.microsoft.com/download) installed and have knowledge on using it.
