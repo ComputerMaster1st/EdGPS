@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
     <!--<LangVersion>preview</LangVersion>-->
     <AssemblyVersion>1.0.0.1</AssemblyVersion>
     <Description>The tool works by constantly watching the newest "journal*.log" for any changes and processes those changes into usable data to be displayed. It's basically a system map combined with galaxy map, although it's pretty basic. It also saves the system data to a sub-directory so you have your own little "Universal Cartography" database. It'll also load up the last system you were in on startup. From a user's perspective, it can be really handy to have running in the background as you can just take a quick glance at it and know what you want to DSS as well as what you've first discovered.</Description>
