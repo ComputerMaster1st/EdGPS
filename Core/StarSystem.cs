@@ -92,8 +92,10 @@ namespace EdGps.Core
 
         public static StarSystem Load(string systemName = null) {
             if (!string.IsNullOrWhiteSpace(systemName)) {
-                if (File.Exists($"{Directories.SystemDir}/{systemName.Replace("*", "")}.json"))
-                    return JsonConvert.DeserializeObject<StarSystem>(File.ReadAllText($"{Directories.SystemDir}/{systemName}.json"));
+                var cleanSystemName = systemName.Replace("*", "");
+
+                if (File.Exists($"{Directories.SystemDir}/{cleanSystemName}.json"))
+                    return JsonConvert.DeserializeObject<StarSystem>(File.ReadAllText($"{Directories.SystemDir}/{cleanSystemName}.json"));
                 else return null;
             }
 

@@ -11,16 +11,18 @@ namespace EdGps.Core.Models
         public BodyType Type { get; set; } = BodyType.Other;
         public string SubType { get; set; } = string.Empty;
         public List<int> Parents { get; set; } = new List<int>();
+        public string StarSystem { get; set; } = string.Empty;
         public double Distance { get; set; } = -1;
         public bool Discovered { get; set; }
         public bool Mapped { get; set; }
         public string Terraformable { get; set; } = string.Empty;
 
         [JsonConstructor]
-        private ScanBody(int bodyId, string bodyName, List<Parent> parents, double distanceFromArrivalLS, string type, bool wasDiscovered, bool wasMapped) {
+        private ScanBody(int bodyId, string bodyName, List<Parent> parents, string starSystem, double distanceFromArrivalLS, string type, bool wasDiscovered, bool wasMapped) {
             Id = bodyId;
             Name = bodyName;
             Parents = ParseParents(parents);
+            StarSystem = starSystem;
             Distance = Math.Round(distanceFromArrivalLS, 0);
             SubType = type;
             Discovered = wasDiscovered;

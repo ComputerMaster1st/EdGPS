@@ -10,6 +10,7 @@ namespace EdGps.Core
         private static Dictionary<string, BodyType> _starTypes = new Dictionary<string, BodyType>() {
             // Non-Sequence Stars
             { "H", BodyType.Black_Hole },
+            { "SupermassiveBlackHole", BodyType.Black_Hole },
             { "N", BodyType.Neutron_Star },
 
             // White Dwarfs
