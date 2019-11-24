@@ -8,7 +8,7 @@ Twitch Clip : [E:D GPS Demonstration](https://www.twitch.tv/videos/430282763)
 
 Upcoming Update : [Nothing yet...](https://github.com/ComputerMaster1st/EdGPS/wiki/Upcoming!)
 
-Latest Update : * [July 2nd '19 - More Star Types & Application Changes](https://github.com/ComputerMaster1st/EdGPS/wiki/July-2nd-'19)
+Latest Update : * [November 24th '19 - Bugfixes](https://github.com/ComputerMaster1st/EdGPS/wiki/November-24th-'19)
 
 Recent Updates : [Updates - Index](https://github.com/ComputerMaster1st/EdGPS/wiki)
 
